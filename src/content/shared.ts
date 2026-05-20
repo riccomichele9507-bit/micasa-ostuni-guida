@@ -7,12 +7,36 @@ export const CONTACT = {
   address: '72017 Ostuni — Vico Costa, 14-16',
 } as const
 
+// WiFi credentials and the masterlock code are kept OUT of the source / public repo.
+// - Client: Vite `define` (see vite.config.ts) inlines __WIFI_NETWORK__ etc. at build.
+// - Server (serverless function): the same values come from process.env.VITE_* at runtime.
+// Set VITE_WIFI_NETWORK / VITE_WIFI_PASSWORD / VITE_LOCK_CODE in .env (local) and in
+// the Vercel dashboard (Production + Preview).
+declare const __WIFI_NETWORK__: string | undefined
+declare const __WIFI_PASSWORD__: string | undefined
+declare const __LOCK_CODE__: string | undefined
+
+function pick(clientValue: string | undefined, envKey: string): string {
+  if (clientValue) return clientValue
+  const proc = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process
+  return proc?.env?.[envKey] ?? ''
+}
+
 export const WIFI = {
-  network: 'Linkem_685EBD',
-  password: 'ap0b1uhi',
+  network: pick(
+    typeof __WIFI_NETWORK__ !== 'undefined' ? __WIFI_NETWORK__ : undefined,
+    'VITE_WIFI_NETWORK',
+  ),
+  password: pick(
+    typeof __WIFI_PASSWORD__ !== 'undefined' ? __WIFI_PASSWORD__ : undefined,
+    'VITE_WIFI_PASSWORD',
+  ),
 } as const
 
-export const LOCK_CODE = '3698'
+export const LOCK_CODE = pick(
+  typeof __LOCK_CODE__ !== 'undefined' ? __LOCK_CODE__ : undefined,
+  'VITE_LOCK_CODE',
+)
 
 /** Google Maps short links. */
 export const MAPS = {

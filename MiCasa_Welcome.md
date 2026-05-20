@@ -39,19 +39,19 @@ MiCasa was born from a land rich in culture and tradition and from Michele and I
 - Check in is available from 2:00 PM
 - We will notify you if the house is ready earlier for early check-in
 - The house has self check-in
-- The code to get the keys from the masterlock is **3698**
+- The code to get the keys from the masterlock is **••••** (set via the `VITE_LOCK_CODE` env var)
 - Both blue doors are reserved for you: one leads to the apartment, the second to the terrace
 
 ## Check Out — before 10:00 AM
 - Check out is at 10:00
-- You can leave the keys in the masterlock outside (**3698**)
+- You can leave the keys in the masterlock outside (code in the `VITE_LOCK_CODE` env var)
 - Thank you for choosing MiCasa Ostuni
 
 ---
 
 ## WiFi
-- Network: `Linkem_685EBD`
-- Password: `ap0b1uhi`
+- Network: `••••` (set via the `VITE_WIFI_NETWORK` env var)
+- Password: `••••` (set via the `VITE_WIFI_PASSWORD` env var)
 
 ---
 
