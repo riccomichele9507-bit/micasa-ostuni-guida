@@ -1,32 +1,15 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
-import { Hero } from '@/components/sections/Hero'
-import { Essentials } from '@/components/sections/Essentials'
-import { House } from '@/components/sections/House'
-import { Explore } from '@/components/sections/Explore'
-import { EatDrink } from '@/components/sections/EatDrink'
-import { BeforeYouGo } from '@/components/sections/BeforeYouGo'
-import { Faq } from '@/components/sections/Faq'
-import { Closing } from '@/components/sections/Closing'
-import { ChatLauncher } from '@/components/chat/ChatLauncher'
 import { LanguageGate } from '@/components/LanguageGate'
-import { getContent } from '@/content'
 import { STORAGE } from '@/lib/constants'
 import type { Lang } from '@/content/types'
 
-// Lazy-load the chat panel (with react-markdown) so the guide renders fast
-// and the chat bundle loads only on first interaction.
-const ChatPanel = lazy(() => import('@/components/chat/ChatPanel'))
+// The whole guide is a separate chunk so the first screen (the language gate)
+// loads with minimal JS. It is prefetched on idle, so it opens instantly.
+const Guide = lazy(() => import('@/Guide'))
 
 export default function App() {
   const { i18n } = useTranslation()
-  const lang = (i18n.resolvedLanguage ?? 'en') as Lang
-  const c = getContent(lang)
-
-  const [chatMounted, setChatMounted] = useState(false)
-  const [chatOpen, setChatOpen] = useState(false)
   const [langChosen, setLangChosen] = useState(() => {
     try {
       return localStorage.getItem(STORAGE.langChosen) === '1'
@@ -35,14 +18,19 @@ export default function App() {
     }
   })
 
+  // Prefetch the guide chunk while the gate is shown → instant on language choice.
   useEffect(() => {
-    document.documentElement.lang = lang
-  }, [lang])
-
-  const openChat = () => {
-    setChatMounted(true)
-    setChatOpen(true)
-  }
+    const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+      .requestIdleCallback
+    const load = () => void import('@/Guide')
+    const id = ric ? ric(load) : window.setTimeout(load, 1200)
+    return () => {
+      const cic = (window as unknown as { cancelIdleCallback?: (id: number) => void })
+        .cancelIdleCallback
+      if (cic) cic(id as number)
+      else window.clearTimeout(id as number)
+    }
+  }, [])
 
   const chooseLang = (l: Lang) => {
     void i18n.changeLanguage(l)
@@ -59,28 +47,8 @@ export default function App() {
   }
 
   return (
-    <>
-      <Header onAskAI={openChat} />
-      <Hero c={c} />
-
-      <main className="mx-auto max-w-6xl space-y-20 px-4 py-16 sm:px-6 sm:py-20">
-        <Essentials c={c} />
-        <House c={c} />
-        <Explore c={c} />
-        <EatDrink c={c} onAskAI={openChat} />
-        <BeforeYouGo c={c} />
-        <Faq c={c} />
-        <Closing c={c} />
-      </main>
-
-      <Footer c={c} />
-
-      {!chatOpen && <ChatLauncher onClick={openChat} />}
-      {chatMounted && (
-        <Suspense fallback={null}>
-          <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} lang={lang} />
-        </Suspense>
-      )}
-    </>
+    <Suspense fallback={<div className="min-h-screen bg-sand-100" />}>
+      <Guide />
+    </Suspense>
   )
 }
