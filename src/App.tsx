@@ -4,7 +4,6 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Hero } from '@/components/sections/Hero'
 import { Essentials } from '@/components/sections/Essentials'
-import { Reach } from '@/components/sections/Reach'
 import { House } from '@/components/sections/House'
 import { Explore } from '@/components/sections/Explore'
 import { EatDrink } from '@/components/sections/EatDrink'
@@ -43,7 +42,6 @@ export default function App() {
 
       <main className="mx-auto max-w-6xl space-y-20 px-4 py-16 sm:px-6 sm:py-20">
         <Essentials c={c} />
-        <Reach c={c} />
         <House c={c} />
         <Explore c={c} />
         <EatDrink c={c} />

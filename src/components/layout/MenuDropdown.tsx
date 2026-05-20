@@ -6,7 +6,6 @@ import { cn } from '@/lib/cn'
 // All sections, in page order.
 const MENU = [
   { id: 'essentials', key: 'sections.essentials' },
-  { id: 'reach', key: 'sections.reach' },
   { id: 'house', key: 'sections.house' },
   { id: 'explore', key: 'nav.explore' },
   { id: 'eat', key: 'nav.eat' },
