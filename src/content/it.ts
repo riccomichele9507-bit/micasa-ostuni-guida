@@ -72,7 +72,7 @@ export const it: GuideContent = {
   },
   waste: {
     intro:
-      'Nei giorni indicati puoi gentilmente lasciare i rifiuti differenziati sui gradini dell’ingresso della via principale.',
+      'Metti i rifiuti differenziati fuori, sulle scale dell’ingresso della via principale, il giorno del ritiro dopo le ore 19:00. Se alla partenza non hai potuto buttare l’immondizia perché non era il giorno giusto, puoi lasciarla in casa.',
     outro: 'Grazie per la collaborazione 🌍',
     dayCol: 'Giorno',
     typeCol: 'Tipo di rifiuto',

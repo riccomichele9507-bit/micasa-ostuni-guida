@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import type { ChatRequest, ChatTurn } from '../src/types/chat'
 import type { Lang } from '../src/content/types'
 import { LANGS } from '../src/content/types'
-import { getClient, getModel } from './_lib/anthropic'
+import { getClient, getModel } from './_lib/openai'
 import { buildSystemPrompt } from './_lib/prompt'
 import { getKnowledgeBase } from './_lib/kb'
 
@@ -10,7 +10,7 @@ import { getKnowledgeBase } from './_lib/kb'
 // enforced client-side; these are just sanity bounds.
 const MAX_MESSAGES = 40
 const MAX_MESSAGE_LENGTH = 600
-const MAX_TOKENS = 700
+const MAX_OUTPUT_TOKENS = 800
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -49,24 +49,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const system = buildSystemPrompt(lang, getKnowledgeBase(lang))
     const client = getClient()
 
-    const completion = await client.messages.create({
+    const response = await client.responses.create({
       model: getModel(),
-      max_tokens: MAX_TOKENS,
-      system,
-      messages: safe.map((m) => ({ role: m.role, content: m.content })),
+      instructions: system,
+      input: safe.map((m) => ({ role: m.role, content: m.content })),
+      tools: [{ type: 'web_search_preview' }],
+      max_output_tokens: MAX_OUTPUT_TOKENS,
     })
 
-    const reply = completion.content
-      .filter((block) => block.type === 'text')
-      .map((block) => (block as { text: string }).text)
-      .join('\n')
-      .trim()
-
+    const reply = (response.output_text ?? '').trim()
     res.status(200).json({ reply: reply || '…' })
   } catch (err) {
     console.error('[api/chat] error:', err)
-    const notConfigured =
-      err instanceof Error && err.message.includes('ANTHROPIC_API_KEY')
+    const notConfigured = err instanceof Error && err.message.includes('OPENAI_API_KEY')
     res.status(notConfigured ? 503 : 500).json({
       error: notConfigured ? 'not_configured' : 'upstream_error',
       message: notConfigured

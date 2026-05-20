@@ -72,7 +72,7 @@ export const de: GuideContent = {
   },
   waste: {
     intro:
-      'An den unten genannten Tagen können Sie Ihren getrennten Müll auf die Eingangsstufen der Hauptstraße stellen.',
+      'Stellen Sie Ihren getrennten Müll draußen auf die Eingangsstufen der Hauptstraße, am Abholtag nach 19:00 Uhr. Wenn Sie den Müll bei der Abreise nicht entsorgen konnten, weil nicht der richtige Tag war, können Sie ihn einfach in der Wohnung lassen.',
     outro: 'Danke für Ihre Mithilfe 🌍',
     dayCol: 'Tag',
     typeCol: 'Abfallart',

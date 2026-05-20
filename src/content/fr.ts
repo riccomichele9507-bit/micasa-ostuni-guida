@@ -72,7 +72,7 @@ export const fr: GuideContent = {
   },
   waste: {
     intro:
-      'Les jours indiqués, vous pouvez déposer vos déchets triés sur les marches de l’entrée de la rue principale.',
+      'Déposez vos déchets triés dehors, sur les marches de l’entrée de la rue principale, le jour de la collecte après 19h00. Si, au moment de partir, vous n’avez pas pu sortir les ordures parce que ce n’était pas le bon jour, vous pouvez simplement les laisser dans le logement.',
     outro: 'Merci de votre coopération 🌍',
     dayCol: 'Jour',
     typeCol: 'Type de déchet',

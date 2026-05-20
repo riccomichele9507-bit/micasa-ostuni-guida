@@ -12,9 +12,18 @@ export function Footer({ c }: { c: GuideContent }) {
           <div>
             <p className="font-display text-2xl italic text-ink">MiCasa Ostuni</p>
             <p className="mt-1 text-sm text-muted">{t('footer.madeWith')}</p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-muted">
-              <MapPin size={15} className="text-sea" /> {c.hero.address}
-            </p>
+            <a
+              href={c.hero.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-3 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-terracotta"
+            >
+              <MapPin size={15} className="text-sea" />
+              {c.hero.address}
+              <span className="font-medium text-terracotta underline-offset-2 group-hover:underline">
+                · {t('actions.openMap')}
+              </span>
+            </a>
           </div>
 
           <div className="text-sm">

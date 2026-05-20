@@ -7,7 +7,7 @@ questions about the apartment, Ostuni and Puglia.
 
 - **Languages:** Italian, English, French, German (`it`, `en`, `fr`, `de`)
 - **Stack:** Vite + React 19 + TypeScript, Tailwind CSS v4, i18next
-- **AI:** Anthropic Claude, called from a serverless function (`/api/chat`)
+- **AI:** OpenAI GPT-4.1 with web search, called from a serverless function (`/api/chat`)
 - **Hosting:** Vercel — live at **https://guida.micasaostuni.com**
 
 ---
@@ -15,7 +15,7 @@ questions about the apartment, Ostuni and Puglia.
 ## Prerequisites
 
 - **Node.js 20+** and npm
-- An **Anthropic API key** — get one at https://console.anthropic.com
+- An **OpenAI API key** — get one at https://platform.openai.com
 - The **Vercel CLI** for local development of the AI function:
   ```bash
   npm i -g vercel
@@ -31,7 +31,7 @@ npm install
 
 # 2. Create your local env file and add your key
 cp .env.example .env
-#    then open .env and set ANTHROPIC_API_KEY=sk-ant-...
+#    then open .env and set OPENAI_API_KEY=sk-...
 
 # 3. Run the app WITH the AI function
 vercel dev
@@ -40,6 +40,11 @@ vercel dev
 > **Use `vercel dev`, not `vite`.** Plain `vite` serves the UI but **not** the
 > `/api/chat` serverless function, so the AI assistant won't work. `vercel dev`
 > runs both together.
+>
+> **On a machine with TLS interception (antivirus/proxy):** local OpenAI calls may
+> fail with a connection/certificate error. Start with TLS verification disabled
+> **for local dev only**: `NODE_TLS_REJECT_UNAUTHORIZED=0 vercel dev`. Production on
+> Vercel is unaffected.
 
 ### Production build (static output)
 
@@ -72,12 +77,12 @@ questions about the area.
 
 ## Security
 
-- `ANTHROPIC_API_KEY` is **server-side only**. It's read by the `/api/chat`
+- `OPENAI_API_KEY` is **server-side only**. It's read by the `/api/chat`
   serverless function and never sent to the browser.
 - **Never** prefix it (or any secret) with `VITE_`. Vite bundles every `VITE_*`
   variable into the public client code, which would leak the key.
 - The guest question limit is a client-side UX guard — the real safeguard for
-  cost/abuse is your Anthropic account settings and Vercel function logs.
+  cost/abuse is your OpenAI account settings (usage limits) and Vercel function logs.
 
 ---
 
@@ -87,8 +92,8 @@ questions about the area.
    root to link it).
 2. **Set environment variables** in Vercel → *Settings → Environment Variables*
    (for Production and Preview):
-   - `ANTHROPIC_API_KEY` — your Anthropic key
-   - `ANTHROPIC_MODEL` — e.g. `claude-haiku-4-5` (see `.env.example`)
+   - `OPENAI_API_KEY` — your OpenAI key
+   - `OPENAI_MODEL` — e.g. `gpt-4.1` (see `.env.example`)
 3. **Deploy:**
    ```bash
    vercel --prod

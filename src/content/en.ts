@@ -72,7 +72,7 @@ export const en: GuideContent = {
   },
   waste: {
     intro:
-      'On the days below you can kindly place your sorted waste on the entrance stairs of the main street.',
+      'Put your sorted waste outside, on the entrance stairs of the main street, on the collection day after 7:00 PM. If you couldn’t take the rubbish out before leaving because it wasn’t the right day, you can simply leave it in the house.',
     outro: 'Thank you for your cooperation 🌍',
     dayCol: 'Day',
     typeCol: 'Waste type',

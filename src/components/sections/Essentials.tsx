@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Section } from '@/components/ui/Section'
 import { CopyButton } from '@/components/ui/CopyButton'
 import { IMAGES } from '@/lib/images'
+import { cn } from '@/lib/cn'
 import type { GuideContent } from '@/content/types'
 
 function Card({
@@ -36,12 +37,30 @@ function Card({
 
 export function Essentials({ c }: { c: GuideContent }) {
   const { t } = useTranslation()
-  const checkinPhotos = IMAGES.checkin.filter(Boolean).slice(0, 2)
+  const checkinPhotos = IMAGES.checkin.filter(Boolean).slice(0, 3)
 
   return (
     <Section id="essentials" eyebrow={t('sections.essentials')}>
       <div className="grid gap-5 md:grid-cols-3">
         <Card icon={<KeyRound size={20} />} title={t('sections.checkin')} time={c.checkIn.time}>
+          {checkinPhotos.length > 0 && (
+            <div
+              className={cn(
+                'mt-4 grid gap-2',
+                checkinPhotos.length >= 3 ? 'grid-cols-3' : 'grid-cols-2',
+              )}
+            >
+              {checkinPhotos.map((src) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[4/3] w-full rounded-card border border-sand-200 object-cover"
+                />
+              ))}
+            </div>
+          )}
           <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted">
             {c.checkIn.points.map((p) => (
               <li key={p}>{p}</li>
@@ -58,19 +77,6 @@ export function Essentials({ c }: { c: GuideContent }) {
             </div>
             <CopyButton value={c.checkIn.lockCode} ariaLabel={c.checkIn.lockLabel} />
           </div>
-          {checkinPhotos.length > 0 && (
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {checkinPhotos.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt=""
-                  loading="lazy"
-                  className="aspect-[4/3] w-full rounded-card border border-sand-200 object-cover"
-                />
-              ))}
-            </div>
-          )}
         </Card>
 
         <Card icon={<LogOut size={20} />} title={t('sections.checkout')} time={c.checkOut.time}>

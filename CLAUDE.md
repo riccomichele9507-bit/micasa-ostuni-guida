@@ -26,9 +26,9 @@ Frontend:   React 19 + TypeScript + Vite
 Styling:    Tailwind CSS v4 (@tailwindcss/vite, CSS-first @theme in src/index.css)
 i18n:       react-i18next (+ i18next-browser-languagedetector), 4 locales
 Icons:      lucide-react
-Motion:     motion (framer-motion successor) — used sparingly, lazy
+Motion:     CSS transitions (no animation library)
 Markdown:   react-markdown + remark-gfm (chat answers only)
-AI:         @anthropic-ai/sdk in a Vercel serverless function (api/chat.ts), Claude Haiku 4.5
+AI:         openai SDK in a Vercel serverless function (api/chat.ts), GPT-4.1 + web_search tool
 Deploy:     Vite build → Vercel; /api auto-detected as functions
 ```
 
@@ -57,7 +57,7 @@ Rules: light background always (`sand-50`). Cards are white with `border-sand-20
 ```
 api/
   chat.ts                 POST /api/chat — ONLY place the API key is used
-  _lib/anthropic.ts       SDK client (process.env.ANTHROPIC_API_KEY) + getModel()
+  _lib/openai.ts          OpenAI client (process.env.OPENAI_API_KEY) + getModel()
   _lib/prompt.ts          buildSystemPrompt(lang, kb) — locks reply language
   _lib/kb/index.ts        getKnowledgeBase(lang) = serialized guide + extra notes
   _lib/kb/ostuniPuglia.ts extra Ostuni/Puglia notes per language (server-only, editable)
@@ -93,21 +93,25 @@ src/
 ## AI concierge — how it works
 
 `ChatPanel` → `useChat(lang)` → `POST /api/chat { lang, messages }` → `api/chat.ts` validates input,
-builds the language-locked system prompt with the KB, calls Claude Haiku 4.5, returns `{ reply }`.
+builds the language-locked system prompt with the KB, then calls OpenAI GPT-4.1 via the Responses
+API with the `web_search` tool (so it can answer about Ostuni/Puglia with up-to-date info), returns
+`{ reply }`. The prompt restricts apartment/stay facts to the KB only; web search is for the local area.
 
 - **15-question limit**: client-side only (`useQuestionLimit`, localStorage `micasa.chat.count`).
   Accepted trade-off: bypassable by clearing storage. Server still caps message count/length.
 - **API key**: server-side only. NEVER use a `VITE_`-prefixed env var for it (would leak into the
-  browser bundle). Verify with `grep -ri "sk-ant" dist/` after a build → must be empty.
+  browser bundle). Verify with `grep -ri "sk-" dist/` after a build → must be empty.
 
 ## Environment variables (server-side)
 
 ```
-ANTHROPIC_API_KEY   real key (local: .env, prod: Vercel dashboard)
-ANTHROPIC_MODEL     claude-haiku-4-5
+OPENAI_API_KEY   real key (local: .env, prod: Vercel dashboard)
+OPENAI_MODEL     gpt-4.1
 ```
 `.env` is gitignored. `.env.example` is committed. Local dev: run `vercel dev` (not plain `vite`) so
-`/api/chat` works.
+`/api/chat` works. NOTE: this machine has TLS interception — local OpenAI calls fail with a
+connection/cert error unless you run with `NODE_TLS_REJECT_UNAUTHORIZED=0` (local only; production
+on Vercel is unaffected).
 
 ## Conventions
 
@@ -119,6 +123,6 @@ ANTHROPIC_MODEL     claude-haiku-4-5
 
 ## Deploy (Vercel)
 
-New project (Vite preset) → set `ANTHROPIC_API_KEY` + `ANTHROPIC_MODEL` env vars → add domain
+New project (Vite preset) → set `OPENAI_API_KEY` + `OPENAI_MODEL` env vars → add domain
 `guida.micasaostuni.com` (CNAME `guida` → `cname.vercel-dns.com`, or auto if apex is in the same
 Vercel account). `robots.txt` + `noindex` keep the private guide out of search engines.
