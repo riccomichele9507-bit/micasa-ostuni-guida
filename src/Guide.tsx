@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { BottomNav } from '@/components/layout/BottomNav'
 import { Hero } from '@/components/sections/Hero'
 import { Essentials } from '@/components/sections/Essentials'
 import { House } from '@/components/sections/House'
@@ -65,7 +66,12 @@ export default function Guide() {
 
       <Footer c={c} />
 
+      {/* Spacer so the mobile bottom bar never covers the footer */}
+      <div className="h-20 md:hidden" aria-hidden="true" />
+
       {!chatOpen && <ChatLauncher onClick={openChat} />}
+      <BottomNav onAskAI={openChat} />
+
       {chatMounted && (
         <Suspense fallback={null}>
           <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} lang={lang} />

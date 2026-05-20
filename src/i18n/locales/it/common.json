@@ -1,6 +1,9 @@
 {
   "nav": {
     "menu": "Menu",
+    "home": "Home",
+    "eatShort": "Mangiare",
+    "assistant": "Assistente",
     "essentials": "Essenziali",
     "house": "Casa",
     "explore": "Esplora",
