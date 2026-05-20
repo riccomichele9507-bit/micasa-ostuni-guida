@@ -8,9 +8,12 @@ export interface ImageManifest {
   hero: string
   /** Up to 2 photos shown in the Check-in card. e.g. ['/images/checkin-1.webp', '/images/checkin-2.webp'] */
   checkin: string[]
+  /** Photo of the hosts (Michele & Ilaria), shown in the "Your hosts" section. e.g. '/images/hosts.webp' */
+  hosts: string
 }
 
 export const IMAGES: ImageManifest = {
   hero: '',
   checkin: ['', ''],
+  hosts: '',
 }

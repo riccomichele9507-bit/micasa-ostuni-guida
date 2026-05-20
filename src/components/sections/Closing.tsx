@@ -1,41 +1,56 @@
 import { Star, Quote, Sparkles, Phone, Mail } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Section } from '@/components/ui/Section'
+import { IMAGES } from '@/lib/images'
+import { cn } from '@/lib/cn'
 import type { GuideContent } from '@/content/types'
 
 export function Closing({ c }: { c: GuideContent }) {
   const { t } = useTranslation()
+  const hostPhoto = IMAGES.hosts
 
   return (
     <div id="hosts" className="scroll-mt-24 space-y-16">
       {/* Hosts */}
       <Section eyebrow={t('sections.hosts')} title={c.hosts.title}>
         <div className="rounded-card border border-sand-200 bg-white p-6 shadow-soft sm:p-8">
-          <div className="space-y-4">
-            {c.hosts.body.map((p) => (
-              <p key={p} className="text-[0.975rem] leading-relaxed text-muted">
-                {p}
-              </p>
-            ))}
-          </div>
-          <div className="mt-6 flex flex-wrap gap-2.5 border-t border-sand-200 pt-6">
-            {c.hosts.phones.map((phone) => (
-              <a
-                key={phone}
-                href={`tel:${phone}`}
-                className="inline-flex items-center gap-1.5 rounded-pill bg-terracotta px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-terracotta-dark"
-              >
-                <Phone size={15} />
-                {phone}
-              </a>
-            ))}
-            <a
-              href={`mailto:${c.hosts.email}`}
-              className="inline-flex items-center gap-1.5 rounded-pill bg-sand-100 px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-terracotta hover:text-white"
-            >
-              <Mail size={15} />
-              {c.hosts.email}
-            </a>
+          <div className={cn(hostPhoto && 'gap-6 sm:flex sm:items-start sm:gap-8')}>
+            {hostPhoto && (
+              <img
+                src={hostPhoto}
+                alt={c.hosts.title}
+                loading="lazy"
+                className="mb-6 h-64 w-full rounded-card object-cover sm:mb-0 sm:h-72 sm:w-64 sm:shrink-0"
+              />
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="space-y-4">
+                {c.hosts.body.map((p) => (
+                  <p key={p} className="text-[0.975rem] leading-relaxed text-muted">
+                    {p}
+                  </p>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2.5 border-t border-sand-200 pt-6">
+                {c.hosts.phones.map((phone) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone}`}
+                    className="inline-flex items-center gap-1.5 rounded-pill bg-terracotta px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-terracotta-dark"
+                  >
+                    <Phone size={15} />
+                    {phone}
+                  </a>
+                ))}
+                <a
+                  href={`mailto:${c.hosts.email}`}
+                  className="inline-flex items-center gap-1.5 rounded-pill bg-sand-100 px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-terracotta hover:text-white"
+                >
+                  <Mail size={15} />
+                  {c.hosts.email}
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
