@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "essentials": "Essenziali",
+    "house": "Casa",
+    "explore": "Esplora",
+    "eat": "Mangiare & bere",
+    "faq": "FAQ"
+  },
+  "sections": {
+    "essentials": "Essenziali",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "wifi": "WiFi",
+    "house": "Info casa",
+    "parking": "Parcheggio",
+    "waste": "Raccolta differenziata",
+    "rules": "Regole della casa",
+    "emergency": "Emergenze",
+    "reach": "Come raggiungerci",
+    "thingsToDo": "Cosa fare",
+    "placesToSee": "Cosa vedere",
+    "beaches": "Spiagge",
+    "nearest": "Nelle vicinanze",
+    "eat": "Dove mangiare",
+    "drink": "Drink & aperitivo",
+    "beforeYouGo": "Prima di partire",
+    "faq": "FAQ",
+    "reviews": "Recensioni ospiti",
+    "offers": "Offerte speciali",
+    "hosts": "I tuoi host"
+  },
+  "actions": {
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "openMap": "Apri in Maps",
+    "openLink": "Apri",
+    "call": "Chiama",
+    "email": "Email",
+    "directions": "Indicazioni"
+  },
+  "chat": {
+    "title": "Chiedi a MiCasa",
+    "subtitle": "Concierge AI per l'appartamento, Ostuni e la Puglia",
+    "launcher": "Chiedi all'AI",
+    "placeholder": "Chiedi di check-in, WiFi, spiagge…",
+    "send": "Invia",
+    "intro": "Ciao! Sono l'assistente di MiCasa. Chiedimi qualsiasi cosa sull'appartamento, Ostuni o la Puglia.",
+    "remaining": "{{count}} / {{max}} domande rimaste",
+    "limitReached": "Hai usato tutte le {{max}} domande. Per altre, scrivi direttamente ai tuoi host.",
+    "error": "Spiacenti, qualcosa è andato storto. Riprova.",
+    "thinking": "Sto pensando…",
+    "suggestions": "Prova a chiedere",
+    "suggestionItems": [
+      "Qual è la password del WiFi?",
+      "Come faccio il check-in?",
+      "Le spiagge migliori vicino?",
+      "Dove mangio stasera?"
+    ],
+    "disclaimer": "Le risposte AI si basano sulla guida dell'host e potrebbero non essere sempre perfette.",
+    "close": "Chiudi chat"
+  },
+  "footer": {
+    "madeWith": "Fatto con cura da Michele & Ilaria",
+    "contact": "Contattaci"
+  },
+  "lang": {
+    "label": "Lingua"
+  }
+}

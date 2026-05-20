@@ -1,0 +1,4 @@
+# MiCasa Ostuni guest guide is a private link shared with guests.
+# Keep it out of search engines.
+User-agent: *
+Disallow: /

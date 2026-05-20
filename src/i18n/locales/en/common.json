@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "essentials": "Essentials",
+    "house": "House",
+    "explore": "Explore",
+    "eat": "Eat & drink",
+    "faq": "FAQ"
+  },
+  "sections": {
+    "essentials": "Essentials",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "wifi": "WiFi",
+    "house": "House info",
+    "parking": "Parking",
+    "waste": "Waste sorting",
+    "rules": "House rules",
+    "emergency": "Emergency",
+    "reach": "How to reach us",
+    "thingsToDo": "Things to do",
+    "placesToSee": "Places to see",
+    "beaches": "Beaches",
+    "nearest": "Your nearest",
+    "eat": "Places to eat",
+    "drink": "Drinks & aperitivo",
+    "beforeYouGo": "Before you go",
+    "faq": "FAQ",
+    "reviews": "Guest reviews",
+    "offers": "Special offers",
+    "hosts": "Your hosts"
+  },
+  "actions": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "openMap": "Open in Maps",
+    "openLink": "Open",
+    "call": "Call",
+    "email": "Email",
+    "directions": "Directions"
+  },
+  "chat": {
+    "title": "Ask MiCasa",
+    "subtitle": "AI concierge for the apartment, Ostuni & Puglia",
+    "launcher": "Ask AI",
+    "placeholder": "Ask about check-in, WiFi, beaches…",
+    "send": "Send",
+    "intro": "Hi! I'm your MiCasa assistant. Ask me anything about the apartment, Ostuni or Puglia.",
+    "remaining": "{{count}} / {{max}} questions left",
+    "limitReached": "You've used all {{max}} questions. For more, message your hosts directly.",
+    "error": "Sorry, something went wrong. Please try again.",
+    "thinking": "Thinking…",
+    "suggestions": "Try asking",
+    "suggestionItems": [
+      "What's the WiFi password?",
+      "How do I check in?",
+      "Best beaches nearby?",
+      "Where should I eat tonight?"
+    ],
+    "disclaimer": "AI answers are based on your host's guide and may not always be perfect.",
+    "close": "Close chat"
+  },
+  "footer": {
+    "madeWith": "Made with care by Michele & Ilaria",
+    "contact": "Contact us"
+  },
+  "lang": {
+    "label": "Language"
+  }
+}

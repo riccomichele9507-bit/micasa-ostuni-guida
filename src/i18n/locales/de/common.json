@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "essentials": "Wichtiges",
+    "house": "Wohnung",
+    "explore": "Entdecken",
+    "eat": "Essen & Trinken",
+    "faq": "FAQ"
+  },
+  "sections": {
+    "essentials": "Wichtiges",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "wifi": "WLAN",
+    "house": "Wohnungs-Infos",
+    "parking": "Parken",
+    "waste": "Mülltrennung",
+    "rules": "Hausregeln",
+    "emergency": "Notfall",
+    "reach": "So erreichen Sie uns",
+    "thingsToDo": "Aktivitäten",
+    "placesToSee": "Sehenswertes",
+    "beaches": "Strände",
+    "nearest": "In der Nähe",
+    "eat": "Restaurants",
+    "drink": "Drinks & Aperitivo",
+    "beforeYouGo": "Vor der Abreise",
+    "faq": "FAQ",
+    "reviews": "Gästebewertungen",
+    "offers": "Sonderangebote",
+    "hosts": "Ihre Gastgeber"
+  },
+  "actions": {
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "openMap": "In Maps öffnen",
+    "openLink": "Öffnen",
+    "call": "Anrufen",
+    "email": "E-Mail",
+    "directions": "Route"
+  },
+  "chat": {
+    "title": "MiCasa fragen",
+    "subtitle": "KI-Concierge für die Wohnung, Ostuni & Apulien",
+    "launcher": "KI fragen",
+    "placeholder": "Fragen Sie nach Check-in, WLAN, Stränden…",
+    "send": "Senden",
+    "intro": "Hallo! Ich bin Ihr MiCasa-Assistent. Fragen Sie mich alles über die Wohnung, Ostuni oder Apulien.",
+    "remaining": "{{count}} / {{max}} Fragen übrig",
+    "limitReached": "Sie haben alle {{max}} Fragen aufgebraucht. Für mehr schreiben Sie bitte direkt Ihren Gastgebern.",
+    "error": "Entschuldigung, etwas ist schiefgelaufen. Bitte erneut versuchen.",
+    "thinking": "Denke nach…",
+    "suggestions": "Fragen Sie zum Beispiel",
+    "suggestionItems": [
+      "Wie lautet das WLAN-Passwort?",
+      "Wie checke ich ein?",
+      "Beste Strände in der Nähe?",
+      "Wo soll ich heute Abend essen?"
+    ],
+    "disclaimer": "KI-Antworten basieren auf dem Gastgeber-Guide und sind nicht immer perfekt.",
+    "close": "Chat schließen"
+  },
+  "footer": {
+    "madeWith": "Mit Sorgfalt erstellt von Michele & Ilaria",
+    "contact": "Kontakt"
+  },
+  "lang": {
+    "label": "Sprache"
+  }
+}

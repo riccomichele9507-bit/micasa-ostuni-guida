@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "essentials": "Essentiel",
+    "house": "Logement",
+    "explore": "Explorer",
+    "eat": "Manger & boire",
+    "faq": "FAQ"
+  },
+  "sections": {
+    "essentials": "Essentiel",
+    "checkin": "Arrivée",
+    "checkout": "Départ",
+    "wifi": "WiFi",
+    "house": "Infos logement",
+    "parking": "Stationnement",
+    "waste": "Tri des déchets",
+    "rules": "Règlement intérieur",
+    "emergency": "Urgences",
+    "reach": "Comment nous rejoindre",
+    "thingsToDo": "À faire",
+    "placesToSee": "À voir",
+    "beaches": "Plages",
+    "nearest": "À proximité",
+    "eat": "Où manger",
+    "drink": "Boire & apéritif",
+    "beforeYouGo": "Avant de partir",
+    "faq": "FAQ",
+    "reviews": "Avis des voyageurs",
+    "offers": "Offres spéciales",
+    "hosts": "Vos hôtes"
+  },
+  "actions": {
+    "copy": "Copier",
+    "copied": "Copié !",
+    "openMap": "Ouvrir dans Maps",
+    "openLink": "Ouvrir",
+    "call": "Appeler",
+    "email": "E-mail",
+    "directions": "Itinéraire"
+  },
+  "chat": {
+    "title": "Demander à MiCasa",
+    "subtitle": "Concierge IA pour l'appartement, Ostuni et les Pouilles",
+    "launcher": "Demander à l'IA",
+    "placeholder": "Posez une question : arrivée, WiFi, plages…",
+    "send": "Envoyer",
+    "intro": "Bonjour ! Je suis l'assistant MiCasa. Demandez-moi tout sur l'appartement, Ostuni ou les Pouilles.",
+    "remaining": "{{count}} / {{max}} questions restantes",
+    "limitReached": "Vous avez utilisé vos {{max}} questions. Pour plus, écrivez directement à vos hôtes.",
+    "error": "Désolé, une erreur est survenue. Veuillez réessayer.",
+    "thinking": "Réflexion…",
+    "suggestions": "Essayez de demander",
+    "suggestionItems": [
+      "Quel est le mot de passe WiFi ?",
+      "Comment faire l'arrivée ?",
+      "Les meilleures plages à proximité ?",
+      "Où manger ce soir ?"
+    ],
+    "disclaimer": "Les réponses de l'IA reposent sur le guide de l'hôte et peuvent ne pas être toujours parfaites.",
+    "close": "Fermer le chat"
+  },
+  "footer": {
+    "madeWith": "Réalisé avec soin par Michele & Ilaria",
+    "contact": "Nous contacter"
+  },
+  "lang": {
+    "label": "Langue"
+  }
+}

@@ -1,0 +1,122 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   MiCasa Ostuni — Design system "Meridiano"
+   Warm Mediterranean / Città Bianca palette. Light only.
+   =========================================================================== */
+@theme {
+  --font-display: 'Fraunces', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, sans-serif;
+
+  /* Warm whitewash neutrals */
+  --color-sand-50: #fbf9f5;
+  --color-sand-100: #f5f0e8;
+  --color-sand-200: #ece4d6;
+  --color-sand-300: #ddd0bb;
+  --color-sand-400: #c4b59a;
+
+  --color-ink: #2a241d;
+  --color-muted: #6f655a;
+
+  /* Brand */
+  --color-terracotta: #c45b2a;
+  --color-terracotta-dark: #a8491f;
+  --color-terracotta-soft: #f4e2d6;
+  --color-sea: #2a5c8a;
+  --color-sea-soft: #dbe6f0;
+  --color-amber: #e8a23a;
+  --color-amber-soft: #f9edd5;
+  --color-olive: #6f7a45;
+  --color-olive-soft: #e7eada;
+
+  --radius-card: 14px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 1px 2px rgba(42, 36, 29, 0.04),
+    0 12px 28px -14px rgba(42, 36, 29, 0.22);
+  --shadow-float: 0 6px 16px -6px rgba(42, 36, 29, 0.18),
+    0 24px 48px -20px rgba(42, 36, 29, 0.3);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* offset for the sticky header when jumping to #anchors */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-sand-50);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-amber);
+    color: var(--color-ink);
+  }
+
+  /* Custom focus ring for keyboard users (a11y) */
+  :focus-visible {
+    outline: 2px solid var(--color-sea);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Markdown rendered inside chat bubbles */
+.prose-chat p {
+  margin: 0 0 0.6em;
+}
+.prose-chat p:last-child {
+  margin-bottom: 0;
+}
+.prose-chat a {
+  color: var(--color-sea);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-chat ul,
+.prose-chat ol {
+  margin: 0.4em 0;
+  padding-left: 1.2em;
+}
+.prose-chat li {
+  margin: 0.2em 0;
+}
+.prose-chat strong {
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
