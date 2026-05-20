@@ -1,5 +1,6 @@
 {
   "nav": {
+    "menu": "Menu",
     "essentials": "Essentials",
     "house": "House",
     "explore": "Explore",
@@ -42,6 +43,7 @@
     "title": "Ask MiCasa",
     "subtitle": "AI concierge for the apartment, Ostuni & Puglia",
     "launcher": "Ask AI",
+    "help": "I'm here to help",
     "placeholder": "Ask about check-in, WiFi, beaches…",
     "send": "Send",
     "intro": "Hi! I'm your MiCasa assistant. Ask me anything about the apartment, Ostuni or Puglia.",

@@ -1,5 +1,6 @@
 {
   "nav": {
+    "menu": "Menu",
     "essentials": "Essentiel",
     "house": "Logement",
     "explore": "Explorer",
@@ -42,6 +43,7 @@
     "title": "Demander à MiCasa",
     "subtitle": "Concierge IA pour l'appartement, Ostuni et les Pouilles",
     "launcher": "Demander à l'IA",
+    "help": "Je suis là pour vous aider",
     "placeholder": "Posez une question : arrivée, WiFi, plages…",
     "send": "Envoyer",
     "intro": "Bonjour ! Je suis l'assistant MiCasa. Demandez-moi tout sur l'appartement, Ostuni ou les Pouilles.",

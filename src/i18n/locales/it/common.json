@@ -1,5 +1,6 @@
 {
   "nav": {
+    "menu": "Menu",
     "essentials": "Essenziali",
     "house": "Casa",
     "explore": "Esplora",
@@ -42,6 +43,7 @@
     "title": "Chiedi a MiCasa",
     "subtitle": "Concierge AI per l'appartamento, Ostuni e la Puglia",
     "launcher": "Chiedi all'AI",
+    "help": "Sono qui per aiutarti",
     "placeholder": "Chiedi di check-in, WiFi, spiagge…",
     "send": "Invia",
     "intro": "Ciao! Sono l'assistente di MiCasa. Chiedimi qualsiasi cosa sull'appartamento, Ostuni o la Puglia.",

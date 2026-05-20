@@ -19,11 +19,8 @@ export function Hero({ c }: { c: GuideContent }) {
           <div className="absolute inset-0 bg-gradient-to-b from-black/25 to-sand-50" />
         </>
       ) : (
-        <>
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-soft via-sand-50 to-sea-soft" />
-          <div className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-amber/30 blur-3xl" />
-          <div className="absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-terracotta/20 blur-3xl" />
-        </>
+        // Light, warm off-white — same background as the footer
+        <div className="absolute inset-0 bg-sand-100" />
       )}
 
       <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-6">

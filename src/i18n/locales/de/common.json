@@ -1,5 +1,6 @@
 {
   "nav": {
+    "menu": "Menü",
     "essentials": "Wichtiges",
     "house": "Wohnung",
     "explore": "Entdecken",
@@ -42,6 +43,7 @@
     "title": "MiCasa fragen",
     "subtitle": "KI-Concierge für die Wohnung, Ostuni & Apulien",
     "launcher": "KI fragen",
+    "help": "Ich helfe Ihnen gerne",
     "placeholder": "Fragen Sie nach Check-in, WLAN, Stränden…",
     "send": "Senden",
     "intro": "Hallo! Ich bin Ihr MiCasa-Assistent. Fragen Sie mich alles über die Wohnung, Ostuni oder Apulien.",

@@ -2,6 +2,7 @@ import { KeyRound, LogOut, Wifi } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Section } from '@/components/ui/Section'
 import { CopyButton } from '@/components/ui/CopyButton'
+import { IMAGES } from '@/lib/images'
 import type { GuideContent } from '@/content/types'
 
 function Card({
@@ -35,6 +36,7 @@ function Card({
 
 export function Essentials({ c }: { c: GuideContent }) {
   const { t } = useTranslation()
+  const checkinPhotos = IMAGES.checkin.filter(Boolean).slice(0, 2)
 
   return (
     <Section id="essentials" eyebrow={t('sections.essentials')}>
@@ -56,6 +58,19 @@ export function Essentials({ c }: { c: GuideContent }) {
             </div>
             <CopyButton value={c.checkIn.lockCode} ariaLabel={c.checkIn.lockLabel} />
           </div>
+          {checkinPhotos.length > 0 && (
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {checkinPhotos.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[4/3] w-full rounded-card border border-sand-200 object-cover"
+                />
+              ))}
+            </div>
+          )}
         </Card>
 
         <Card icon={<LogOut size={20} />} title={t('sections.checkout')} time={c.checkOut.time}>
