@@ -9,11 +9,11 @@ export function ChatLauncher({ onClick }: { onClick: () => void }) {
   const { t } = useTranslation()
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5">
+    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2">
       <button
         type="button"
         onClick={onClick}
-        className="inline-flex rounded-pill border border-sand-200 bg-white px-3.5 py-2 text-sm font-medium text-ink shadow-soft transition-colors hover:border-terracotta hover:text-terracotta sm:px-4 sm:py-2.5"
+        className="rounded-pill border border-sand-200 bg-white px-3 py-1.5 text-xs font-medium text-ink shadow-soft transition-colors hover:border-terracotta hover:text-terracotta"
       >
         {t('chat.help')}
       </button>
