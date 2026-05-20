@@ -237,8 +237,6 @@ export const it: GuideContent = {
     'È stato un piacere soggiornare da Michele. Dotato di ogni comfort ed estremamente pulito, bagno spazioso, cucina ben attrezzata, abbastanza centrale, facile da raggiungere e facile parcheggiare nelle vicinanze. Altamente consigliato — torneremo!',
   ],
   offers: [
-    { name: 'Sconto Early Bird', detail: '10% di sconto prenotando con largo anticipo.' },
-    { name: 'Sconto Long Stay', detail: '20% di sconto per soggiorni di 8 notti o più.' },
     { name: 'Ospiti di ritorno', detail: '15% di sconto sulla tua prossima prenotazione.' },
   ],
 }

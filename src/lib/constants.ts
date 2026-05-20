@@ -8,4 +8,6 @@ export const MAX_MESSAGE_LENGTH = 600
 export const STORAGE = {
   chatCount: 'micasa.chat.count',
   lang: 'micasa.lang',
+  /** Set once the guest has explicitly picked a language on the welcome gate. */
+  langChosen: 'micasa.langChosen',
 } as const

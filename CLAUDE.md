@@ -28,7 +28,7 @@ i18n:       react-i18next (+ i18next-browser-languagedetector), 4 locales
 Icons:      lucide-react
 Motion:     CSS transitions (no animation library)
 Markdown:   react-markdown + remark-gfm (chat answers only)
-AI:         openai SDK in a Vercel serverless function (api/chat.ts), GPT-4.1 + web_search tool
+AI:         openai SDK in a Vercel serverless function (api/chat.ts), GPT-4.1 mini + web_search tool
 Deploy:     Vite build → Vercel; /api auto-detected as functions
 ```
 
@@ -93,7 +93,7 @@ src/
 ## AI concierge — how it works
 
 `ChatPanel` → `useChat(lang)` → `POST /api/chat { lang, messages }` → `api/chat.ts` validates input,
-builds the language-locked system prompt with the KB, then calls OpenAI GPT-4.1 via the Responses
+builds the language-locked system prompt with the KB, then calls OpenAI GPT-4.1 mini via the Responses
 API with the `web_search` tool (so it can answer about Ostuni/Puglia with up-to-date info), returns
 `{ reply }`. The prompt restricts apartment/stay facts to the KB only; web search is for the local area.
 
@@ -106,7 +106,7 @@ API with the `web_search` tool (so it can answer about Ostuni/Puglia with up-to-
 
 ```
 OPENAI_API_KEY   real key (local: .env, prod: Vercel dashboard)
-OPENAI_MODEL     gpt-4.1
+OPENAI_MODEL     gpt-4.1-mini
 ```
 `.env` is gitignored. `.env.example` is committed. Local dev: run `vercel dev` (not plain `vite`) so
 `/api/chat` works. NOTE: this machine has TLS interception — local OpenAI calls fail with a

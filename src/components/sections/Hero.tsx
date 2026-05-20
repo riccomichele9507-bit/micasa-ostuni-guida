@@ -1,10 +1,12 @@
 import { MapPin, ArrowDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { LinkButton } from '@/components/ui/LinkButton'
 import { IMAGES } from '@/lib/images'
 import { cn } from '@/lib/cn'
 import type { GuideContent } from '@/content/types'
 
 export function Hero({ c }: { c: GuideContent }) {
+  const { t } = useTranslation()
   const photos = IMAGES.welcome.filter(Boolean).slice(0, 2)
   const hasPhotos = photos.length > 0
 
@@ -40,7 +42,7 @@ export function Hero({ c }: { c: GuideContent }) {
                 <MapPin size={16} className="text-terracotta" />
                 {c.hero.address}
               </span>
-              <LinkButton href={c.hero.mapUrl} variant="map" />
+              <LinkButton href={c.hero.mapUrl} variant="map" label={t('actions.reachApartment')} />
             </div>
 
             <div className="mt-12 flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-muted">

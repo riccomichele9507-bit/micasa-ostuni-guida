@@ -15,5 +15,5 @@ export function getClient(): OpenAI {
 }
 
 export function getModel(): string {
-  return process.env.OPENAI_MODEL || 'gpt-4.1'
+  return process.env.OPENAI_MODEL || 'gpt-4.1-mini'
 }

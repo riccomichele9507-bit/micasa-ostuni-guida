@@ -237,8 +237,6 @@ export const en: GuideContent = {
     "It was a pleasure to stay at Michele's place. Equipped with every comfort and extremely clean, spacious bathroom, well-equipped kitchen, quite central, easy to reach and easy to park nearby. Highly recommended — we will be back!",
   ],
   offers: [
-    { name: 'Early Bird discount', detail: '10% off when you book well in advance.' },
-    { name: 'Long Stay discount', detail: '20% off for stays of 8 nights or more.' },
     { name: 'Repeat Guests', detail: '15% off your next booking as a returning guest.' },
   ],
 }

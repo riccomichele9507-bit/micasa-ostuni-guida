@@ -21,7 +21,7 @@ export function Footer({ c }: { c: GuideContent }) {
               <MapPin size={15} className="text-sea" />
               {c.hero.address}
               <span className="font-medium text-terracotta underline-offset-2 group-hover:underline">
-                · {t('actions.openMap')}
+                · {t('actions.reachApartment')}
               </span>
             </a>
           </div>

@@ -237,8 +237,6 @@ export const de: GuideContent = {
     'Es war ein Vergnügen, bei Michele zu wohnen. Mit jedem Komfort ausgestattet und extrem sauber, geräumiges Bad, gut ausgestattete Küche, recht zentral, leicht zu erreichen und einfach in der Nähe zu parken. Sehr empfehlenswert — wir kommen wieder!',
   ],
   offers: [
-    { name: 'Frühbucher-Rabatt', detail: '10 % Rabatt bei rechtzeitiger Buchung.' },
-    { name: 'Langzeit-Rabatt', detail: '20 % Rabatt bei Aufenthalten ab 8 Nächten.' },
     { name: 'Stammgäste', detail: '15 % Rabatt auf Ihre nächste Buchung.' },
   ],
 }

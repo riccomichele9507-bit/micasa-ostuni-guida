@@ -237,8 +237,6 @@ export const fr: GuideContent = {
     'Ce fut un plaisir de séjourner chez Michele. Équipé de tout le confort et extrêmement propre, salle de bain spacieuse, cuisine bien équipée, assez central, facile d’accès et facile pour se garer à proximité. Vivement recommandé — nous reviendrons !',
   ],
   offers: [
-    { name: 'Réduction Early Bird', detail: '10 % de réduction en réservant bien à l’avance.' },
-    { name: 'Réduction Long Séjour', detail: '20 % de réduction pour les séjours de 8 nuits ou plus.' },
     { name: 'Clients fidèles', detail: '15 % de réduction sur votre prochaine réservation.' },
   ],
 }

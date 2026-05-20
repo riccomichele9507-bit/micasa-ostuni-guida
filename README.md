@@ -7,7 +7,7 @@ questions about the apartment, Ostuni and Puglia.
 
 - **Languages:** Italian, English, French, German (`it`, `en`, `fr`, `de`)
 - **Stack:** Vite + React 19 + TypeScript, Tailwind CSS v4, i18next
-- **AI:** OpenAI GPT-4.1 with web search, called from a serverless function (`/api/chat`)
+- **AI:** OpenAI GPT-4.1 mini with web search, called from a serverless function (`/api/chat`)
 - **Hosting:** Vercel — live at **https://guida.micasaostuni.com**
 
 ---
@@ -93,7 +93,7 @@ questions about the area.
 2. **Set environment variables** in Vercel → *Settings → Environment Variables*
    (for Production and Preview):
    - `OPENAI_API_KEY` — your OpenAI key
-   - `OPENAI_MODEL` — e.g. `gpt-4.1` (see `.env.example`)
+   - `OPENAI_MODEL` — e.g. `gpt-4.1-mini` (see `.env.example`)
 3. **Deploy:**
    ```bash
    vercel --prod

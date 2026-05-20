@@ -11,7 +11,9 @@ import { BeforeYouGo } from '@/components/sections/BeforeYouGo'
 import { Faq } from '@/components/sections/Faq'
 import { Closing } from '@/components/sections/Closing'
 import { ChatLauncher } from '@/components/chat/ChatLauncher'
+import { LanguageGate } from '@/components/LanguageGate'
 import { getContent } from '@/content'
+import { STORAGE } from '@/lib/constants'
 import type { Lang } from '@/content/types'
 
 // Lazy-load the chat panel (with react-markdown) so the guide renders fast
@@ -25,6 +27,13 @@ export default function App() {
 
   const [chatMounted, setChatMounted] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [langChosen, setLangChosen] = useState(() => {
+    try {
+      return localStorage.getItem(STORAGE.langChosen) === '1'
+    } catch {
+      return false
+    }
+  })
 
   useEffect(() => {
     document.documentElement.lang = lang
@@ -33,6 +42,20 @@ export default function App() {
   const openChat = () => {
     setChatMounted(true)
     setChatOpen(true)
+  }
+
+  const chooseLang = (l: Lang) => {
+    void i18n.changeLanguage(l)
+    try {
+      localStorage.setItem(STORAGE.langChosen, '1')
+    } catch {
+      /* storage unavailable — proceed anyway */
+    }
+    setLangChosen(true)
+  }
+
+  if (!langChosen) {
+    return <LanguageGate onChoose={chooseLang} />
   }
 
   return (
