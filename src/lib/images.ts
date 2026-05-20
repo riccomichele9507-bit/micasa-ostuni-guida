@@ -1,19 +1,17 @@
 // Photo manifest.
-// Drop optimized images (ideally .webp) into /public/images and point to them here.
+// Optimized .webp images live in /public/images. Reference them here.
 // Leave a value as '' (or an empty array) to fall back to the built-in placeholder.
-//
-// Recommended sizes: hero 1920×1080 (landscape); check-in photos ~1200×900 (4:3).
 export interface ImageManifest {
-  /** Welcome / hero background photo. e.g. '/images/hero.webp' */
-  hero: string
-  /** Up to 2 photos shown in the Check-in card. e.g. ['/images/checkin-1.webp', '/images/checkin-2.webp'] */
+  /** Photos shown in the Welcome/hero, displayed side by side (up to 2). */
+  welcome: string[]
+  /** Up to 2 photos shown in the Check-in card. */
   checkin: string[]
-  /** Photo of the hosts (Michele & Ilaria), shown in the "Your hosts" section. e.g. '/images/hosts.webp' */
+  /** Photo of the hosts (Michele & Ilaria), shown in the "Your hosts" section. */
   hosts: string
 }
 
 export const IMAGES: ImageManifest = {
-  hero: '',
-  checkin: ['', ''],
+  welcome: ['/images/welcome-04.webp', '/images/welcome-11.webp'],
+  checkin: ['/images/checkin-01.webp', '/images/checkin-esterni.webp'],
   hosts: '',
 }
