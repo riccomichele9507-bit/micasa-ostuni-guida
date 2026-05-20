@@ -67,7 +67,7 @@ export default function App() {
         <Essentials c={c} />
         <House c={c} />
         <Explore c={c} />
-        <EatDrink c={c} />
+        <EatDrink c={c} onAskAI={openChat} />
         <BeforeYouGo c={c} />
         <Faq c={c} />
         <Closing c={c} />

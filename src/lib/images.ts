@@ -13,9 +13,9 @@ export interface ImageManifest {
 export const IMAGES: ImageManifest = {
   welcome: [],
   checkin: [
-    '/images/checkin-01.webp',
-    '/images/checkin-esterni.webp',
     '/images/checkin-ingresso.webp',
+    '/images/checkin-esterni.webp',
+    '/images/checkin-01.webp',
   ],
   hosts: '',
 }

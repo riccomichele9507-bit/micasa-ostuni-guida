@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { KeyRound, LogOut, Wifi } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Section } from '@/components/ui/Section'
 import { CopyButton } from '@/components/ui/CopyButton'
+import { Lightbox } from '@/components/ui/Lightbox'
 import { IMAGES } from '@/lib/images'
 import { cn } from '@/lib/cn'
 import type { GuideContent } from '@/content/types'
@@ -38,26 +40,35 @@ function Card({
 export function Essentials({ c }: { c: GuideContent }) {
   const { t } = useTranslation()
   const checkinPhotos = IMAGES.checkin.filter(Boolean).slice(0, 3)
+  const [zoom, setZoom] = useState<string | null>(null)
 
   return (
     <Section id="essentials" eyebrow={t('sections.essentials')}>
+      {zoom && <Lightbox src={zoom} onClose={() => setZoom(null)} />}
       <div className="grid gap-5 md:grid-cols-3">
         <Card icon={<KeyRound size={20} />} title={t('sections.checkin')} time={c.checkIn.time}>
           {checkinPhotos.length > 0 && (
             <div
               className={cn(
-                'mt-4 grid gap-2',
+                'mt-4 grid gap-2.5',
                 checkinPhotos.length >= 3 ? 'grid-cols-3' : 'grid-cols-2',
               )}
             >
               {checkinPhotos.map((src) => (
-                <img
+                <button
                   key={src}
-                  src={src}
-                  alt=""
-                  loading="lazy"
-                  className="aspect-[4/3] w-full rounded-card border border-sand-200 object-cover"
-                />
+                  type="button"
+                  onClick={() => setZoom(src)}
+                  aria-label={t('actions.enlarge')}
+                  className="group relative cursor-zoom-in overflow-hidden rounded-card border border-sand-200"
+                >
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </button>
               ))}
             </div>
           )}

@@ -176,7 +176,7 @@ export default function ChatPanel({ open, onClose, lang }: ChatPanelProps) {
                 rows={1}
                 disabled={inputDisabled}
                 aria-label={t('chat.placeholder')}
-                className="max-h-32 min-h-[2.75rem] flex-1 resize-none rounded-card border border-sand-200 bg-sand-50 px-3 py-2.5 text-sm text-ink placeholder:text-muted focus:border-terracotta focus:outline-none disabled:opacity-50"
+                className="max-h-32 min-h-[2.75rem] flex-1 resize-none rounded-card border border-sand-200 bg-sand-50 px-3 py-2.5 text-base text-ink placeholder:text-muted focus:border-terracotta focus:outline-none disabled:opacity-50 sm:text-sm"
               />
               <button
                 type="button"

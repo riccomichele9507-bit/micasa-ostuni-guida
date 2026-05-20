@@ -35,6 +35,7 @@
     "copied": "Kopiert!",
     "openMap": "In Maps öffnen",
     "reachApartment": "Zur Wohnung",
+    "enlarge": "Foto vergrößern",
     "openLink": "Öffnen",
     "call": "Anrufen",
     "email": "E-Mail",
@@ -65,6 +66,10 @@
   "footer": {
     "madeWith": "Mit Sorgfalt erstellt von Michele & Ilaria",
     "contact": "Kontakt"
+  },
+  "eat": {
+    "lookingFor": "Suchen Sie ein bestimmtes Restaurant?",
+    "askAssistant": "Fragen Sie den Assistenten"
   },
   "lang": {
     "label": "Sprache"

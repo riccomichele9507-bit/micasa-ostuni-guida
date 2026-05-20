@@ -13,7 +13,7 @@ export function ChatLauncher({ onClick }: { onClick: () => void }) {
       <button
         type="button"
         onClick={onClick}
-        className="hidden rounded-pill border border-sand-200 bg-white px-4 py-2.5 text-sm font-medium text-ink shadow-soft transition-colors hover:border-terracotta hover:text-terracotta sm:inline-flex"
+        className="inline-flex rounded-pill border border-sand-200 bg-white px-3.5 py-2 text-sm font-medium text-ink shadow-soft transition-colors hover:border-terracotta hover:text-terracotta sm:px-4 sm:py-2.5"
       >
         {t('chat.help')}
       </button>

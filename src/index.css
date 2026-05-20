@@ -48,10 +48,13 @@
     scroll-behavior: smooth;
     /* offset for the sticky header when jumping to #anchors */
     scroll-padding-top: 5.5rem;
+    /* never allow horizontal panning of the page (clip keeps sticky working) */
+    overflow-x: clip;
   }
 
   body {
     margin: 0;
+    overflow-x: clip;
     background-color: var(--color-sand-50);
     color: var(--color-ink);
     font-family: var(--font-sans);
