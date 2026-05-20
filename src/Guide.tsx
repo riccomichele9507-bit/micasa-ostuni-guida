@@ -51,7 +51,7 @@ export default function Guide() {
 
   return (
     <>
-      <Header onAskAI={openChat} />
+      <Header />
       <Hero c={c} />
 
       <main className="mx-auto max-w-6xl space-y-20 px-4 py-16 sm:px-6 sm:py-20">

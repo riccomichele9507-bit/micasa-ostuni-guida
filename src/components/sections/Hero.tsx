@@ -42,7 +42,12 @@ export function Hero({ c }: { c: GuideContent }) {
                 <MapPin size={16} className="text-terracotta" />
                 {c.hero.address}
               </span>
-              <LinkButton href={c.hero.mapUrl} variant="map" label={t('actions.reachApartment')} />
+              <LinkButton
+                href={c.hero.mapUrl}
+                variant="map"
+                label={t('actions.reachApartment')}
+                className="animate-wiggle hover:animate-none"
+              />
             </div>
 
             <div className="mt-12 flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-muted">

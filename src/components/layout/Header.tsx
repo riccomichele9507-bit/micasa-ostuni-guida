@@ -1,13 +1,9 @@
-import { MessageCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { MenuDropdown } from './MenuDropdown'
+import { MAPS } from '@/content/shared'
 
-interface HeaderProps {
-  onAskAI: () => void
-}
-
-export function Header({ onAskAI }: HeaderProps) {
+export function Header() {
   const { t } = useTranslation()
 
   return (
@@ -21,14 +17,28 @@ export function Header({ onAskAI }: HeaderProps) {
         <div className="flex items-center gap-2">
           <MenuDropdown />
           <LanguageSwitcher />
-          <button
-            type="button"
-            onClick={onAskAI}
-            className="inline-flex items-center gap-1.5 rounded-pill bg-terracotta px-3.5 py-2 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-terracotta-dark"
+          <a
+            href={MAPS.house}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('actions.reachApartment')}
+            className="inline-flex items-center justify-center rounded-pill border border-sand-200 bg-white/80 p-2 text-ink backdrop-blur transition-colors hover:border-terracotta"
           >
-            <MessageCircle size={16} />
-            <span className="hidden sm:inline">{t('chat.launcher')}</span>
-          </button>
+            <svg
+              width={20}
+              height={20}
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.06 6.34 11.62 6.61 11.9a1.23 1.23 0 0 0 1.78 0c.27-.28 6.61-6.84 6.61-11.9C19.5 5.36 16.14 2 12 2Z"
+                fill="#EA4335"
+              />
+              <circle cx="12" cy="9.5" r="2.75" fill="#fff" />
+            </svg>
+          </a>
         </div>
       </div>
     </header>
