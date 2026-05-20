@@ -1,8 +1,8 @@
-import type { GuideContent, Lang } from './types'
-import { it } from './it'
-import { en } from './en'
-import { fr } from './fr'
-import { de } from './de'
+import type { GuideContent, Lang } from './types.js'
+import { it } from './it.js'
+import { en } from './en.js'
+import { fr } from './fr.js'
+import { de } from './de.js'
 
 const CONTENT: Record<Lang, GuideContent> = { it, en, fr, de }
 

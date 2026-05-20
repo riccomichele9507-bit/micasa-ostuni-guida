@@ -1,5 +1,5 @@
-import type { GuideContent } from './types'
-import { CONTACT, WIFI, LOCK_CODE, MAPS, LINKS } from './shared'
+import type { GuideContent } from './types.js'
+import { CONTACT, WIFI, LOCK_CODE, MAPS, LINKS } from './shared.js'
 
 export const en: GuideContent = {
   hero: {

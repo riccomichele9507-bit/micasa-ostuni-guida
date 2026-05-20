@@ -1,4 +1,4 @@
-import type { Lang } from '../../../src/content/types'
+import type { Lang } from '../../../src/content/types.js'
 
 // Extra, free-form knowledge about Ostuni & Puglia for the AI assistant.
 // SERVER-SIDE ONLY — this is never shipped to the browser.

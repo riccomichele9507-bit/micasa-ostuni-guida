@@ -1,10 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import type { ChatRequest, ChatTurn } from '../src/types/chat'
-import type { Lang } from '../src/content/types'
-import { LANGS } from '../src/content/types'
-import { getClient, getModel } from './_lib/openai'
-import { buildSystemPrompt } from './_lib/prompt'
-import { getKnowledgeBase } from './_lib/kb'
+import type { ChatRequest, ChatTurn } from '../src/types/chat.js'
+import type { Lang } from '../src/content/types.js'
+import { LANGS } from '../src/content/types.js'
+import { getClient, getModel } from './_lib/openai.js'
+import { buildSystemPrompt } from './_lib/prompt.js'
+import { getKnowledgeBase } from './_lib/kb/index.js'
 
 // Server-side input caps (cost / abuse protection). The 15-question UX limit is
 // enforced client-side; these are just sanity bounds.

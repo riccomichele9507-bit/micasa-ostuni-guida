@@ -1,4 +1,4 @@
-import type { GuideContent, Place } from './types'
+import type { GuideContent, Place } from './types.js'
 
 function placeBlock(title: string, items: Place[]): string {
   if (!items.length) return ''

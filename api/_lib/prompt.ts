@@ -1,4 +1,4 @@
-import type { Lang } from '../../src/content/types'
+import type { Lang } from '../../src/content/types.js'
 
 const LANGUAGE_NAMES: Record<Lang, string> = {
   it: 'Italian',

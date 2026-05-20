@@ -1,7 +1,7 @@
-import type { Lang } from '../../../src/content/types'
-import { getContent } from '../../../src/content'
-import { contentToMarkdown } from '../../../src/content/serialize'
-import { getOstuniPugliaInfo } from './ostuniPuglia'
+import type { Lang } from '../../../src/content/types.js'
+import { getContent } from '../../../src/content/index.js'
+import { contentToMarkdown } from '../../../src/content/serialize.js'
+import { getOstuniPugliaInfo } from './ostuniPuglia.js'
 
 /**
  * Builds the full knowledge base for a language:
