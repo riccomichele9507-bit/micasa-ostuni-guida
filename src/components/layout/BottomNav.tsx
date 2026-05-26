@@ -1,60 +1,27 @@
-import { useEffect, useState } from 'react'
-import { Home, Info, Compass, UtensilsCrossed, MessageCircle } from 'lucide-react'
+import { Home, Info, Compass, UtensilsCrossed, Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/cn'
+import type { View } from '@/views'
 
 interface BottomNavProps {
+  view: View
+  onNavigate: (view: View) => void
   onAskAI: () => void
 }
 
-// Tabs that map to a page section (used for scroll-spy + smooth scroll).
-const SECTIONS = [
-  { id: 'top', icon: Home, key: 'nav.home' },
-  { id: 'essentials', icon: Info, key: 'nav.essentials' },
-  { id: 'explore', icon: Compass, key: 'nav.explore' },
-  { id: 'eat', icon: UtensilsCrossed, key: 'nav.eatShort' },
-] as const
+const TABS = [
+  { view: 'home' as const, icon: Home, key: 'nav.home' },
+  { view: 'essentials' as const, icon: Info, key: 'nav.essentials' },
+  { view: 'explore' as const, icon: Compass, key: 'nav.explore' },
+  { view: 'eat' as const, icon: UtensilsCrossed, key: 'nav.eatShort' },
+]
 
 /**
- * Mobile-only bottom navigation. 4 section tabs (with scroll-spy highlighting the
- * section in view) + an "Assistant" tab that opens the chat. Hidden on desktop,
- * where the header nav + floating chat button are used instead.
+ * Mobile-only bottom navigation. Tabs set the view directly (no scroll-spy:
+ * each view is its own "page" in the single-page state machine).
  */
-export function BottomNav({ onAskAI }: BottomNavProps) {
+export function BottomNav({ view, onNavigate, onAskAI }: BottomNavProps) {
   const { t } = useTranslation()
-  const [active, setActive] = useState('top')
-
-  useEffect(() => {
-    const ids = SECTIONS.map((s) => s.id)
-    let ticking = false
-    const compute = () => {
-      ticking = false
-      const line = 96 // active line just below the sticky header
-      let current = 'top'
-      for (const id of ids) {
-        const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top <= line) current = id
-      }
-      setActive(current)
-    }
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true
-        requestAnimationFrame(compute)
-      }
-    }
-    compute()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
-
-  const go = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   const tabClass = (isActive: boolean) =>
     cn(
@@ -68,28 +35,30 @@ export function BottomNav({ onAskAI }: BottomNavProps) {
       className="fixed inset-x-0 bottom-0 z-40 flex border-t border-sand-200 bg-white/95 shadow-[0_-6px_16px_-8px_rgba(42,36,29,0.18)] backdrop-blur md:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      {SECTIONS.map((s) => {
+      {TABS.map((s) => {
         const Icon = s.icon
-        const isActive = active === s.id
+        const isActive = view === s.view
         return (
           <button
-            key={s.id}
+            key={s.view}
             type="button"
-            onClick={() => go(s.id)}
+            onClick={() => onNavigate(s.view)}
             aria-current={isActive ? 'true' : undefined}
             className={tabClass(isActive)}
           >
             {isActive && (
-              <span className="absolute top-0 h-0.5 w-7 rounded-full bg-terracotta" aria-hidden="true" />
+              <span
+                className="absolute top-0 h-0.5 w-7 rounded-full bg-terracotta"
+                aria-hidden="true"
+              />
             )}
             <Icon size={20} aria-hidden="true" />
             <span className="leading-none">{t(s.key)}</span>
           </button>
         )
       })}
-
       <button type="button" onClick={onAskAI} className={tabClass(false)}>
-        <MessageCircle size={20} aria-hidden="true" />
+        <Sparkles size={20} aria-hidden="true" />
         <span className="leading-none">{t('nav.assistant')}</span>
       </button>
     </nav>

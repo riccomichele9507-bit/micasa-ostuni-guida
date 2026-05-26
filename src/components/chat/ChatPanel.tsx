@@ -12,6 +12,9 @@ interface ChatPanelProps {
   open: boolean
   onClose: () => void
   lang: Lang
+  /** When provided + open, auto-submits this as the first user message (then calls onPromptConsumed). */
+  pendingQuestion?: string | null
+  onPromptConsumed?: () => void
 }
 
 /**
@@ -19,7 +22,13 @@ interface ChatPanelProps {
  * Stays mounted when closed (visibility toggled via `open`) to preserve the
  * conversation and keep transitions smooth.
  */
-export default function ChatPanel({ open, onClose, lang }: ChatPanelProps) {
+export default function ChatPanel({
+  open,
+  onClose,
+  lang,
+  pendingQuestion,
+  onPromptConsumed,
+}: ChatPanelProps) {
   const { t } = useTranslation()
   const { messages, loading, error, send } = useChat(lang)
   const { remaining, reached, max, increment } = useQuestionLimit()
@@ -27,6 +36,7 @@ export default function ChatPanel({ open, onClose, lang }: ChatPanelProps) {
   const [draft, setDraft] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
+  const submittedPendingRef = useRef<string | null>(null)
 
   const suggestions = t('chat.suggestionItems', {
     returnObjects: true,
@@ -45,6 +55,20 @@ export default function ChatPanel({ open, onClose, lang }: ChatPanelProps) {
     const el = bodyRef.current
     if (el) el.scrollTop = el.scrollHeight
   }, [messages, loading])
+
+  // Auto-submit a pending question once when the panel opens with one (suggestion pills).
+  useEffect(() => {
+    if (
+      open &&
+      pendingQuestion &&
+      pendingQuestion !== submittedPendingRef.current
+    ) {
+      submittedPendingRef.current = pendingQuestion
+      void submit(pendingQuestion)
+      onPromptConsumed?.()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, pendingQuestion])
 
   // Focus the input when the panel opens.
   useEffect(() => {

@@ -1,3 +1,6 @@
+/** WhatsApp direct link to the host (Michele) — used by the "Host" quick card. */
+export const WHATSAPP_URL = 'https://wa.me/393462482556'
+
 /** Max questions a guest can ask the AI assistant (enforced client-side). */
 export const MAX_QUESTIONS = 15
 

@@ -39,6 +39,7 @@
     "openMap": "In Maps öffnen",
     "reachApartment": "Zur Wohnung",
     "enlarge": "Foto vergrößern",
+    "backHome": "Zur Startseite",
     "openLink": "Öffnen",
     "call": "Anrufen",
     "email": "E-Mail",
@@ -73,6 +74,35 @@
   "eat": {
     "lookingFor": "Suchen Sie ein bestimmtes Restaurant?",
     "askAssistant": "Fragen Sie den Assistenten"
+  },
+  "home": {
+    "heroTitle": "Willkommen zu Hause",
+    "heroSubtitle": "Ich bin für Ihren Aufenthalt da. Fragen Sie mich alles, jederzeit.",
+    "chatPromptHint": "WLAN, Check-in, Strände, wo essen…",
+    "serveSubito": "Sofort wichtig",
+    "esploraGuida": "Den Guide erkunden",
+    "perTe": "Für Sie",
+    "cards": {
+      "reachSubtitle": "Google Maps öffnen",
+      "checkinSubtitle": "Ab 14:00 · self",
+      "checkoutSubtitle": "Bis 10:00",
+      "hostTitle": "Gastgeber",
+      "hostSubtitle": "Schreiben Sie uns auf WhatsApp"
+    },
+    "cat": {
+      "essentialsTitle": "Wichtiges",
+      "essentialsSubtitle": "Wohnung, Geräte, Regeln",
+      "exploreTitle": "Entdecken",
+      "exploreSubtitle": "Ostuni, Itria-Tal, Dörfer",
+      "eatTitle": "Essen",
+      "eatSubtitle": "Unsere Lieblingsadressen",
+      "wasteTitle": "Mülltrennung",
+      "wasteSubtitle": "Wochenkalender und Regeln"
+    },
+    "suggestions": {
+      "wifi": "WLAN-Passwort",
+      "parking": "Parken"
+    }
   },
   "lang": {
     "label": "Sprache"

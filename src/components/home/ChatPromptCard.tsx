@@ -1,0 +1,21 @@
+import { Sparkles } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+
+export function ChatPromptCard({ onClick }: { onClick: () => void }) {
+  const { t } = useTranslation()
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-center gap-3.5 rounded-card border border-sand-200 bg-white p-4 text-left shadow-soft transition-shadow duration-300 hover:shadow-float"
+    >
+      <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-card bg-terracotta text-white shadow-soft">
+        <Sparkles size={20} aria-hidden="true" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-display text-base font-medium text-ink">{t('chat.title')}</span>
+        <span className="mt-0.5 block truncate text-sm text-muted">{t('home.chatPromptHint')}</span>
+      </span>
+    </button>
+  )
+}

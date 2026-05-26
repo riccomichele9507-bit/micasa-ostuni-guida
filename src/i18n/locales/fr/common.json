@@ -39,6 +39,7 @@
     "openMap": "Ouvrir dans Maps",
     "reachApartment": "Rejoindre l'appartement",
     "enlarge": "Agrandir la photo",
+    "backHome": "Retour à l'accueil",
     "openLink": "Ouvrir",
     "call": "Appeler",
     "email": "E-mail",
@@ -73,6 +74,35 @@
   "eat": {
     "lookingFor": "Vous cherchez un restaurant en particulier ?",
     "askAssistant": "Demandez à l'assistant"
+  },
+  "home": {
+    "heroTitle": "Bienvenue à la maison",
+    "heroSubtitle": "Je suis là pour votre séjour. Posez-moi n'importe quelle question, à toute heure.",
+    "chatPromptHint": "wifi, arrivée, plages, où dîner…",
+    "serveSubito": "Vous aurez besoin de",
+    "esploraGuida": "Explorer le guide",
+    "perTe": "Pour vous",
+    "cards": {
+      "reachSubtitle": "Ouvrir Google Maps",
+      "checkinSubtitle": "Dès 14h00 · autonome",
+      "checkoutSubtitle": "Avant 10h00",
+      "hostTitle": "Hôte",
+      "hostSubtitle": "Écrivez-nous sur WhatsApp"
+    },
+    "cat": {
+      "essentialsTitle": "Essentiels",
+      "essentialsSubtitle": "Logement, équipements, règles",
+      "exploreTitle": "Explorer",
+      "exploreSubtitle": "Ostuni, Vallée d'Itria, villages",
+      "eatTitle": "Manger",
+      "eatSubtitle": "Nos adresses préférées",
+      "wasteTitle": "Tri des déchets",
+      "wasteSubtitle": "Calendrier hebdomadaire et règles"
+    },
+    "suggestions": {
+      "wifi": "Mot de passe Wi-Fi",
+      "parking": "Stationnement"
+    }
   },
   "lang": {
     "label": "Langue"

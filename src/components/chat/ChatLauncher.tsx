@@ -1,21 +1,20 @@
-import { MessageCircle } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 /**
- * Floating action button that opens the AI concierge chat.
- * Single element (no separate bubble): icon + "I'm here to help" on all sizes.
+ * Floating Assistant FAB. Always visible on every view (mobile and desktop),
+ * sits above the mobile bottom nav. Click opens the chat.
  */
 export function ChatLauncher({ onClick }: { onClick: () => void }) {
   const { t } = useTranslation()
-
   return (
     <button
       type="button"
       onClick={onClick}
-      className="fixed bottom-5 right-5 z-40 hidden items-center gap-2 rounded-pill bg-terracotta px-4 py-3 text-white shadow-float transition-transform duration-200 hover:scale-105 hover:bg-terracotta-dark active:scale-95 md:inline-flex md:px-5"
+      aria-label={t('chat.title')}
+      className="fixed bottom-24 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-pill bg-terracotta text-white shadow-float transition-transform duration-200 hover:scale-105 hover:bg-terracotta-dark active:scale-95 md:bottom-6"
     >
-      <MessageCircle size={20} aria-hidden="true" />
-      <span className="text-sm font-medium">{t('chat.help')}</span>
+      <Sparkles size={22} aria-hidden="true" />
     </button>
   )
 }

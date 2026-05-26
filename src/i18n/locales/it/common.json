@@ -1,7 +1,7 @@
 {
   "nav": {
     "menu": "Menu",
-    "home": "Home",
+    "home": "Casa",
     "eatShort": "Mangiare",
     "assistant": "Assistente",
     "essentials": "Essenziali",
@@ -39,6 +39,7 @@
     "openMap": "Apri in Maps",
     "reachApartment": "Raggiungi l'appartamento",
     "enlarge": "Ingrandisci foto",
+    "backHome": "Torna alla home",
     "openLink": "Apri",
     "call": "Chiama",
     "email": "Email",
@@ -73,6 +74,35 @@
   "eat": {
     "lookingFor": "Cerchi qualche ristorante particolare?",
     "askAssistant": "Chiedi all'assistente"
+  },
+  "home": {
+    "heroTitle": "Benvenuto a casa",
+    "heroSubtitle": "Sono qui per il tuo soggiorno. Chiedimi qualsiasi cosa, a qualsiasi ora.",
+    "chatPromptHint": "wifi, check-in, spiagge, dove cenare…",
+    "serveSubito": "Serve subito",
+    "esploraGuida": "Esplora la guida",
+    "perTe": "Per te",
+    "cards": {
+      "reachSubtitle": "Apri Google Maps",
+      "checkinSubtitle": "Dalle 14:00 · self",
+      "checkoutSubtitle": "Entro le 10:00",
+      "hostTitle": "Host",
+      "hostSubtitle": "Scrivici su WhatsApp"
+    },
+    "cat": {
+      "essentialsTitle": "Elementi essenziali",
+      "essentialsSubtitle": "Casa, elettrodomestici, regole",
+      "exploreTitle": "Esplorare",
+      "exploreSubtitle": "Ostuni, Valle d'Itria, borghi",
+      "eatTitle": "Mangiare",
+      "eatSubtitle": "I nostri indirizzi del cuore",
+      "wasteTitle": "Raccolta differenziata",
+      "wasteSubtitle": "Calendario e regole"
+    },
+    "suggestions": {
+      "wifi": "Password Wi-Fi",
+      "parking": "Parcheggio"
+    }
   },
   "lang": {
     "label": "Lingua"

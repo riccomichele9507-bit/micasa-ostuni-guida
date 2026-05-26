@@ -1,36 +1,48 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
 import { BottomNav } from '@/components/layout/BottomNav'
-import { Hero } from '@/components/sections/Hero'
-import { Essentials } from '@/components/sections/Essentials'
-import { House } from '@/components/sections/House'
-import { Explore } from '@/components/sections/Explore'
-import { EatDrink } from '@/components/sections/EatDrink'
-import { BeforeYouGo } from '@/components/sections/BeforeYouGo'
-import { Faq } from '@/components/sections/Faq'
-import { Closing } from '@/components/sections/Closing'
 import { ChatLauncher } from '@/components/chat/ChatLauncher'
+import Home from '@/Home'
+import { DetailView } from '@/components/views/DetailView'
+import { CheckInView } from '@/components/views/CheckInView'
+import { CheckOutView } from '@/components/views/CheckOutView'
+import { EssentialsView } from '@/components/views/EssentialsView'
+import { ExploreView } from '@/components/views/ExploreView'
+import { EatView } from '@/components/views/EatView'
+import { WasteView } from '@/components/views/WasteView'
 import { getContent } from '@/content'
 import type { Lang } from '@/content/types'
+import type { View } from '@/views'
 
-// Chat code (incl. react-markdown) loads only when needed; prefetched on idle.
+// Chat panel (with react-markdown) loads on first interaction; prefetched on idle.
 const ChatPanel = lazy(() => import('@/components/chat/ChatPanel'))
 
+/**
+ * App shell: header + current view + bottom nav (mobile) + always-visible
+ * Assistant FAB + lazy chat panel. Views are managed as a single-page
+ * state machine; "Torna alla home" returns to the home view.
+ */
 export default function Guide() {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const lang = (i18n.resolvedLanguage ?? 'en') as Lang
   const c = getContent(lang)
 
+  const [view, setView] = useState<View>('home')
   const [chatMounted, setChatMounted] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
+  const [pendingQuestion, setPendingQuestion] = useState<string | null>(null)
 
   useEffect(() => {
     document.documentElement.lang = lang
   }, [lang])
 
-  // Prefetch the chat chunk while the browser is idle so it opens instantly.
+  // Scroll to top whenever the view changes (each view is its own page).
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }, [view])
+
+  // Prefetch the chat chunk on idle so it opens instantly.
   useEffect(() => {
     const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
       .requestIdleCallback
@@ -44,37 +56,90 @@ export default function Guide() {
     }
   }, [])
 
-  const openChat = () => {
+  const openChat = (prefill?: string) => {
+    if (prefill) setPendingQuestion(prefill)
     setChatMounted(true)
     setChatOpen(true)
   }
 
+  const navigate = (v: View) => setView(v)
+  const backHome = () => setView('home')
+
+  const renderView = () => {
+    if (view === 'home') {
+      return <Home c={c} onAskAI={openChat} onNavigate={navigate} />
+    }
+    switch (view) {
+      case 'checkin':
+        return (
+          <DetailView title={t('sections.checkin')} onBack={backHome}>
+            <CheckInView c={c} />
+          </DetailView>
+        )
+      case 'checkout':
+        return (
+          <DetailView title={t('sections.checkout')} onBack={backHome}>
+            <CheckOutView c={c} />
+          </DetailView>
+        )
+      case 'essentials':
+        return (
+          <DetailView
+            title={t('home.cat.essentialsTitle')}
+            eyebrow={t('home.esploraGuida')}
+            onBack={backHome}
+          >
+            <EssentialsView c={c} />
+          </DetailView>
+        )
+      case 'explore':
+        return (
+          <DetailView
+            title={t('home.cat.exploreTitle')}
+            eyebrow={t('home.esploraGuida')}
+            onBack={backHome}
+          >
+            <ExploreView c={c} />
+          </DetailView>
+        )
+      case 'eat':
+        return (
+          <DetailView
+            title={t('home.cat.eatTitle')}
+            eyebrow={t('home.esploraGuida')}
+            onBack={backHome}
+          >
+            <EatView c={c} />
+          </DetailView>
+        )
+      case 'waste':
+        return (
+          <DetailView
+            title={t('home.cat.wasteTitle')}
+            eyebrow={t('home.esploraGuida')}
+            onBack={backHome}
+          >
+            <WasteView c={c} />
+          </DetailView>
+        )
+    }
+  }
+
   return (
     <>
-      <Header />
-      <Hero c={c} />
-
-      <main className="mx-auto max-w-6xl space-y-20 px-4 py-16 sm:px-6 sm:py-20">
-        <Essentials c={c} />
-        <House c={c} />
-        <Explore c={c} />
-        <EatDrink c={c} onAskAI={openChat} />
-        <BeforeYouGo c={c} />
-        <Faq c={c} />
-        <Closing c={c} />
-      </main>
-
-      <Footer c={c} />
-
-      {/* Spacer so the mobile bottom bar never covers the footer */}
-      <div className="h-20 md:hidden" aria-hidden="true" />
-
-      {!chatOpen && <ChatLauncher onClick={openChat} />}
-      <BottomNav onAskAI={openChat} />
-
+      <Header onNavigate={navigate} onAskAI={() => openChat()} />
+      {renderView()}
+      <BottomNav view={view} onNavigate={navigate} onAskAI={() => openChat()} />
+      <ChatLauncher onClick={() => openChat()} />
       {chatMounted && (
         <Suspense fallback={null}>
-          <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} lang={lang} />
+          <ChatPanel
+            open={chatOpen}
+            onClose={() => setChatOpen(false)}
+            lang={lang}
+            pendingQuestion={pendingQuestion}
+            onPromptConsumed={() => setPendingQuestion(null)}
+          />
         </Suspense>
       )}
     </>
