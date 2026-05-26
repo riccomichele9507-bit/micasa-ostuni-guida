@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import { MapPin } from 'lucide-react'
 import { CopyButton } from '@/components/ui/CopyButton'
+import { LinkButton } from '@/components/ui/LinkButton'
 import { Lightbox } from '@/components/ui/Lightbox'
 import { IMAGES } from '@/lib/images'
+import { MAPS } from '@/content/shared'
 import { cn } from '@/lib/cn'
 import type { GuideContent } from '@/content/types'
+
+const APARTMENT_STREET = 'Vicolo Andrea Costa 12/14'
 
 export function CheckInView({ c }: { c: GuideContent }) {
   const photos = IMAGES.checkin.filter(Boolean).slice(0, 3)
@@ -16,6 +21,14 @@ export function CheckInView({ c }: { c: GuideContent }) {
       <p className="inline-flex rounded-pill bg-sea-soft px-3 py-1 text-sm font-semibold text-sea">
         {c.checkIn.time}
       </p>
+
+      <div className="flex items-center justify-between gap-3 rounded-card border border-sand-200 bg-white p-3 shadow-soft sm:p-4">
+        <div className="flex min-w-0 items-center gap-2">
+          <MapPin size={18} className="shrink-0 text-terracotta" aria-hidden="true" />
+          <span className="font-medium text-ink">{APARTMENT_STREET}</span>
+        </div>
+        <LinkButton href={MAPS.house} variant="map" />
+      </div>
 
       {photos.length > 0 && (
         <div
