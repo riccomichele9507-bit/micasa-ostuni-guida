@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Casa Bianca · Editorial — MiCasa premium showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter+Tight:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #faf6ee;
+        --ink: #1f1a14;
+        --muted: #6b6157;
+        --terracotta: #c2532a;
+        --terra-soft: #f4e2d6;
+        --cool: #5b6f86;
+        --cool-soft: #e3e8ee;
+        --rule: rgba(31, 26, 20, 0.12);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter Tight', system-ui, sans-serif;
+        background: #eee7da;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.55;
+      }
+      a { color: inherit; }
+      .display { font-family: 'Fraunces', Georgia, serif; font-weight: 400; letter-spacing: -0.015em; }
+      .italic { font-style: italic; }
+
+      /* ============== Showcase chrome ============== */
+      .showcase {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+      .bar {
+        position: sticky; top: 0; z-index: 10;
+        display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+        padding: 14px 24px;
+        background: rgba(238, 231, 218, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--rule);
+      }
+      .bar .brand {
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 18px;
+      }
+      .bar .brand small {
+        font-family: 'Inter Tight', sans-serif; font-style: normal;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--muted); margin-left: 10px; font-weight: 600;
+      }
+      .bar .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+      .bar .tab {
+        appearance: none; border: 1px solid transparent; background: transparent;
+        font: inherit; font-size: 13px; padding: 6px 14px; border-radius: 999px;
+        cursor: pointer; color: var(--muted); transition: all 0.2s ease;
+      }
+      .bar .tab:hover { color: var(--ink); }
+      .bar .tab.active {
+        background: var(--ink); color: #faf6ee; border-color: var(--ink);
+      }
+      .bar a.back {
+        font-size: 12px; color: var(--muted); text-decoration: none;
+        border-bottom: 1px solid currentColor; padding-bottom: 2px;
+      }
+
+      .stage {
+        display: grid; place-items: center;
+        padding: 48px 16px 96px;
+        position: relative;
+      }
+      .stage::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(194, 83, 42, 0.07), transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(91, 111, 134, 0.05), transparent 40%);
+        pointer-events: none;
+      }
+      .caption {
+        text-align: center; margin-top: 28px;
+        font-size: 13px; color: var(--muted); max-width: 380px;
+      }
+      .caption strong { color: var(--ink); font-weight: 500; }
+
+      /* ============== Phone device ============== */
+      .device {
+        width: 390px; height: 844px;
+        border-radius: 50px;
+        background: var(--paper);
+        border: 9px solid #14110d;
+        overflow: hidden;
+        position: relative;
+        box-shadow:
+          0 1px 2px rgba(20, 17, 13, 0.4),
+          0 40px 80px -30px rgba(20, 17, 13, 0.45),
+          inset 0 0 0 1px #2a241d;
+      }
+      .device::before {
+        content: ''; position: absolute; z-index: 5;
+        top: 11px; left: 50%; transform: translateX(-50%);
+        width: 110px; height: 28px; background: #14110d; border-radius: 18px;
+      }
+      .screen {
+        position: absolute; inset: 0;
+        display: none;
+        overflow-y: auto;
+        background: var(--paper);
+        -ms-overflow-style: none; scrollbar-width: none;
+      }
+      .screen::-webkit-scrollbar { display: none; }
+      .screen.active { display: block; }
+      .screen .pad-top { height: 56px; }       /* room for the notch */
+      .screen .pad-bottom { height: 80px; }    /* room for tab bar */
+
+      /* Bottom tab bar (faux, inside each screen) */
+      .tabbar {
+        position: absolute; left: 0; right: 0; bottom: 0;
+        display: flex; justify-content: space-around; align-items: center;
+        height: 64px; padding-bottom: 12px;
+        background: rgba(250, 246, 238, 0.96);
+        border-top: 1px solid var(--rule); backdrop-filter: blur(10px);
+      }
+      .tabbar a {
+        flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+        font-size: 10px; color: var(--muted); text-decoration: none; font-weight: 500;
+      }
+      .tabbar a svg { opacity: 0.7; }
+      .tabbar a.active { color: var(--terracotta); }
+      .tabbar a.active svg { opacity: 1; }
+
+      /* Shared screen header (small) */
+      .hd {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 20px;
+      }
+      .hd .home-mark {
+        width: 22px; height: 22px; border-radius: 6px; background: var(--terracotta);
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      .hd .home-mark svg { color: #faf6ee; }
+      .hd .right { display: flex; gap: 8px; align-items: center; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+
+      /* Page intro pattern */
+      .chap {
+        padding: 0 28px;
+      }
+      .chap .num {
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--terracotta);
+        letter-spacing: 0.04em;
+      }
+      .chap .eyebrow {
+        font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted);
+        font-weight: 600; margin-top: 4px;
+      }
+      .chap h1 {
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+        font-size: 44px; line-height: 1.0; letter-spacing: -0.02em;
+        margin: 14px 0 0;
+      }
+      .chap h1 .roman { font-style: normal; }
+      .chap .lede {
+        margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--muted);
+        max-width: 92%;
+      }
+      .rule { height: 1px; background: var(--ink); opacity: 0.85; width: 36px; margin: 18px 0; }
+
+      /* ============== Screen 1: HOME ============== */
+      #home .hero {
+        position: relative; height: 460px; overflow: hidden;
+        margin: 16px 20px 0; border-radius: 12px;
+      }
+      #home .hero img {
+        position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      }
+      #home .hero::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(20,17,13,0.05) 0%, rgba(20,17,13,0.55) 60%, rgba(20,17,13,0.85) 100%);
+      }
+      #home .hero .overlay {
+        position: absolute; inset: 0; padding: 22px 22px 24px;
+        display: flex; flex-direction: column; justify-content: space-between;
+        color: #faf6ee; z-index: 2;
+      }
+      #home .hero .top-meta {
+        display: flex; justify-content: space-between; font-size: 10px;
+        letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600;
+      }
+      #home .hero h1 {
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+        font-size: 64px; line-height: 0.95; letter-spacing: -0.02em; margin: 0;
+      }
+      #home .hero h1 .roman { font-style: normal; display: block; font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; font-family: 'Inter Tight'; font-weight: 600; }
+      #home .quote {
+        padding: 28px 28px 8px; font-size: 17px; line-height: 1.55; color: var(--ink);
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+      }
+      #home .actions { padding: 12px 20px 0; }
+      #home .chat-cta {
+        display: flex; align-items: center; gap: 14px;
+        padding: 14px 16px;
+        background: var(--ink); color: #faf6ee;
+        border-radius: 14px;
+        text-decoration: none;
+      }
+      #home .chat-cta .dot {
+        width: 38px; height: 38px; border-radius: 50%;
+        background: var(--terracotta);
+        display: grid; place-items: center; color: #faf6ee;
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 20px;
+      }
+      #home .chat-cta .label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,246,238,0.65); font-weight: 600; }
+      #home .chat-cta .text { font-size: 15px; margin-top: 1px; }
+      #home .chap-list { margin-top: 20px; padding: 0 28px; }
+      #home .chap-list .row {
+        display: grid; grid-template-columns: 32px 1fr auto; align-items: baseline; gap: 10px;
+        padding: 14px 0; border-top: 1px solid var(--rule);
+      }
+      #home .chap-list .row:last-child { border-bottom: 1px solid var(--rule); }
+      #home .chap-list .row .n { font-family: 'Fraunces', serif; font-style: italic; color: var(--terracotta); font-size: 16px; }
+      #home .chap-list .row .t { font-family: 'Fraunces', serif; font-size: 18px; line-height: 1.15; }
+      #home .chap-list .row .s { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+
+      /* ============== Screen 2: CHECK-IN ============== */
+      #check .hero {
+        margin: 16px 20px 0; height: 360px; overflow: hidden; border-radius: 12px; position: relative;
+      }
+      #check .hero img { width: 100%; height: 100%; object-fit: cover; }
+      #check .body { padding: 22px 28px 0; }
+      #check .stepgrid {
+        margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      }
+      #check .step {
+        border: 1px solid var(--rule); padding: 14px;
+        border-radius: 10px; background: #fff;
+      }
+      #check .step .n { font-family: 'Fraunces', serif; font-style: italic; color: var(--terracotta); font-size: 18px; }
+      #check .step .t { font-size: 13px; font-weight: 500; margin-top: 6px; }
+      #check .step .s { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+      #check .lock {
+        margin-top: 16px; padding: 22px; border-radius: 12px;
+        background: linear-gradient(135deg, #f4e2d6 0%, #f9ead8 100%);
+        border: 1px solid #ecc9af;
+      }
+      #check .lock .lbl { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terracotta); font-weight: 700; }
+      #check .lock .code { font-family: 'Fraunces', serif; font-weight: 500; font-size: 64px; letter-spacing: 0.15em; color: var(--ink); margin-top: 6px; line-height: 1; }
+      #check .lock .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+      #check .addr {
+        margin-top: 16px; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 10px;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        background: #fff;
+      }
+      #check .addr .name { font-size: 13px; }
+      #check .addr a {
+        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terracotta);
+        font-weight: 700; text-decoration: none;
+      }
+
+      /* ============== Screen 3: ESPLORA ============== */
+      #explore .body { padding: 24px 28px 0; }
+      #explore .place {
+        margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--rule);
+      }
+      #explore .place:first-child { margin-top: 18px; border-top: 0; padding-top: 0; }
+      #explore .place .meta {
+        display: flex; justify-content: space-between; align-items: baseline;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+      }
+      #explore .place .meta .num { color: var(--terracotta); font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; letter-spacing: 0; }
+      #explore .place h3 {
+        font-family: 'Fraunces', serif; font-weight: 400; font-style: italic;
+        font-size: 30px; line-height: 1.05; margin: 8px 0 8px;
+      }
+      #explore .place .note {
+        font-size: 13.5px; line-height: 1.55; color: var(--muted);
+        max-width: 95%;
+      }
+      #explore .place .quote {
+        margin-top: 10px; font-family: 'Fraunces', serif; font-style: italic;
+        font-size: 14px; color: var(--ink); padding-left: 12px; border-left: 1px solid var(--terracotta);
+      }
+      #explore .place .open {
+        margin-top: 12px; display: inline-block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--terracotta); font-weight: 700; border-bottom: 1px solid currentColor; padding-bottom: 2px;
+        text-decoration: none;
+      }
+
+      /* ============== Screen 4: CHAT ============== */
+      #chat .body { padding: 22px 28px 0; }
+      #chat .convo { margin-top: 18px; display: flex; flex-direction: column; gap: 16px; }
+      #chat .bubble {
+        font-size: 14px; line-height: 1.55; padding: 14px 16px; border-radius: 14px; max-width: 88%;
+      }
+      #chat .bubble.guest {
+        align-self: flex-end; background: var(--ink); color: #faf6ee;
+        border-bottom-right-radius: 4px;
+      }
+      #chat .bubble.host {
+        align-self: flex-start; background: #fff; color: var(--ink);
+        border: 1px solid var(--rule); border-bottom-left-radius: 4px;
+        font-family: 'Fraunces', serif; font-style: italic;
+      }
+      #chat .bubble.host .by {
+        display: block; margin-top: 8px; font-family: 'Inter Tight', sans-serif; font-style: normal;
+        font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600;
+      }
+      #chat .chips {
+        margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px;
+      }
+      #chat .chip {
+        font-size: 12px; padding: 8px 12px; border-radius: 999px;
+        background: #fff; border: 1px solid var(--rule); color: var(--ink);
+      }
+      #chat .input {
+        margin-top: 18px; display: flex; align-items: center; gap: 8px;
+        background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 4px 4px 4px 16px;
+      }
+      #chat .input input { flex: 1; border: 0; background: transparent; font: inherit; font-size: 14px; outline: none; padding: 12px 0; color: var(--ink); }
+      #chat .input input::placeholder { color: var(--muted); }
+      #chat .input .send {
+        width: 40px; height: 40px; border-radius: 10px; background: var(--terracotta); color: #faf6ee;
+        display: grid; place-items: center;
+      }
+
+      /* ============== Screen 5: HOST ============== */
+      #host .portrait {
+        margin: 16px 20px 0; height: 320px; border-radius: 12px; overflow: hidden;
+        position: relative;
+        background:
+          radial-gradient(circle at 30% 30%, #f0d0b3 0%, transparent 50%),
+          radial-gradient(circle at 70% 70%, #d8c2a2 0%, transparent 60%),
+          linear-gradient(135deg, #f4e2d6 0%, #e6cfb4 100%);
+      }
+      #host .portrait .initials {
+        position: absolute; inset: 0; display: grid; place-items: center;
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 120px; color: rgba(31,26,20,0.18);
+        font-weight: 400;
+      }
+      #host .portrait .meta {
+        position: absolute; bottom: 16px; left: 18px; right: 18px;
+        display: flex; justify-content: space-between; align-items: end;
+        font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink);
+        font-weight: 600;
+      }
+      #host .body { padding: 24px 28px 0; }
+      #host .body p { font-size: 14.5px; line-height: 1.7; color: var(--muted); margin: 12px 0 0; }
+      #host .body .pull {
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; line-height: 1.4; color: var(--ink);
+        margin: 18px 0 6px; padding-left: 14px; border-left: 2px solid var(--terracotta);
+      }
+      #host .contact {
+        margin-top: 22px; padding: 16px; border-radius: 12px;
+        background: #fff; border: 1px solid var(--rule);
+        display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      }
+      #host .contact .l { font-size: 12px; color: var(--muted); }
+      #host .contact .v { font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; }
+      #host .contact a {
+        background: #25D366; color: #fff; padding: 10px 14px; border-radius: 10px;
+        font-size: 12px; font-weight: 700; text-decoration: none; letter-spacing: 0.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="showcase">
+      <header class="bar">
+        <span class="brand">Casa Bianca <small>Direction A · Editorial</small></span>
+        <nav class="tabs" role="tablist">
+          <button class="tab active" data-tab="home">Home</button>
+          <button class="tab" data-tab="check">Arrival</button>
+          <button class="tab" data-tab="explore">Explore</button>
+          <button class="tab" data-tab="chat">Concierge</button>
+          <button class="tab" data-tab="host">Hosts</button>
+        </nav>
+        <a class="back" href="./index.html">← All directions</a>
+      </header>
+
+      <main class="stage">
+        <div class="device" aria-label="iPhone preview">
+
+          <!-- ============ HOME ============ -->
+          <section id="home" class="screen active" data-screen="home">
+            <div class="pad-top"></div>
+            <div class="hd">
+              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v9h6v-6h2v6h6v-9h3z"/></svg></span>
+              <div class="right">EN · IT · FR · DE &nbsp;·&nbsp; ☰</div>
+            </div>
+
+            <div class="hero">
+              <img src="../images/checkin-esterni.webp" alt="" />
+              <div class="overlay">
+                <div class="top-meta">
+                  <span>Issue 01 · Summer</span>
+                  <span>MiCasa · Ostuni</span>
+                </div>
+                <h1>
+                  <span class="roman">Welcome</span>
+                  home<em style="font-style:italic">.</em>
+                </h1>
+              </div>
+            </div>
+
+            <p class="quote">
+              “The old white streets, the up and downs, the breathtaking view over the Itria
+              Valley. This is your home in the white city.”
+            </p>
+
+            <div class="actions">
+              <a class="chat-cta" href="#">
+                <span class="dot">✦</span>
+                <span style="flex:1">
+                  <span class="label">Concierge</span>
+                  <span class="text">Ask me anything — anytime.</span>
+                </span>
+                <span style="font-size:18px">→</span>
+              </a>
+            </div>
+
+            <div class="chap-list">
+              <div class="row"><span class="n">I.</span><span class="t">Your arrival</span><span class="s">Check‑in</span></div>
+              <div class="row"><span class="n">II.</span><span class="t">The apartment, in detail</span><span class="s">Essentials</span></div>
+              <div class="row"><span class="n">III.</span><span class="t">Our favourite places</span><span class="s">Explore</span></div>
+              <div class="row"><span class="n">IV.</span><span class="t">The tables we love</span><span class="s">Eat</span></div>
+              <div class="row"><span class="n">V.</span><span class="t">Hello, we're the hosts</span><span class="s">Story</span></div>
+            </div>
+
+            <div class="pad-bottom"></div>
+            <nav class="tabbar">
+              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
+            </nav>
+          </section>
+
+          <!-- ============ CHECK-IN ============ -->
+          <section id="check" class="screen" data-screen="check">
+            <div class="pad-top"></div>
+            <div class="hd">
+              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
+              <div class="right">CHAPTER I</div>
+            </div>
+            <div class="hero">
+              <img src="../images/checkin-ingresso.webp" alt="" />
+            </div>
+            <div class="body">
+              <div class="chap" style="padding:0">
+                <span class="num">Chapter I.</span>
+                <h1>Your arrival, <span class="italic">step by step</span>.</h1>
+              </div>
+              <div class="rule"></div>
+              <div class="stepgrid">
+                <div class="step"><div class="n">01.</div><div class="t">Park</div><div class="s">Free on Vico Costa, or covered options at 5–10 min walk.</div></div>
+                <div class="step"><div class="n">02.</div><div class="t">Find the door</div><div class="s">Vicolo Andrea Costa 12/14, on the left.</div></div>
+                <div class="step"><div class="n">03.</div><div class="t">The masterlock</div><div class="s">A small black box, to the side of the door.</div></div>
+                <div class="step"><div class="n">04.</div><div class="t">Welcome in</div><div class="s">Both blue doors are yours. One leads to the terrace.</div></div>
+              </div>
+              <div class="lock">
+                <div class="lbl">Masterlock code</div>
+                <div class="code">3 6 9 8</div>
+                <div class="hint">Tap to copy · Same code on the way out.</div>
+              </div>
+              <div class="addr">
+                <div>
+                  <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600">Address</div>
+                  <div class="name">Vicolo Andrea Costa 12/14 · Ostuni, BR</div>
+                </div>
+                <a href="#">Open in Maps →</a>
+              </div>
+            </div>
+            <div class="pad-bottom"></div>
+            <nav class="tabbar">
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
+              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
+            </nav>
+          </section>
+
+          <!-- ============ EXPLORE ============ -->
+          <section id="explore" class="screen" data-screen="explore">
+            <div class="pad-top"></div>
+            <div class="hd">
+              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
+              <div class="right">CHAPTER III</div>
+            </div>
+            <div class="body">
+              <div class="chap" style="padding:0">
+                <span class="num">Chapter III.</span>
+                <h1>The places <span class="italic">we love</span>.</h1>
+                <p class="lede">Hand-picked by Michele &amp; Ilaria after fifteen summers in the white city.</p>
+              </div>
+              <div class="rule"></div>
+
+              <article class="place">
+                <div class="meta"><span class="num">01.</span><span>Dinner · Cave restaurant</span></div>
+                <h3>Osteria del Tempo Perso</h3>
+                <p class="note">The most beloved address in the old town — set inside an ancient cave, dishes that taste of the sea and the orchards. Book a few days ahead.</p>
+                <p class="quote">“If it's your first night in Ostuni, this is the postcard.”</p>
+                <a class="open" href="#">Open in Maps →</a>
+              </article>
+
+              <article class="place">
+                <div class="meta"><span class="num">02.</span><span>Nature · Marine reserve</span></div>
+                <h3>Torre Guaceto</h3>
+                <p class="note">A protected coastline of turquoise water and dunes, twenty minutes by car. Take a bike, take time.</p>
+                <a class="open" href="#">Open in Maps →</a>
+              </article>
+
+              <article class="place">
+                <div class="meta"><span class="num">03.</span><span>Day trip · UNESCO</span></div>
+                <h3>I trulli di Alberobello</h3>
+                <p class="note">A short drive into the Itria Valley — cone-roofed houses, a UNESCO site that still feels lived-in.</p>
+                <a class="open" href="#">Open in Maps →</a>
+              </article>
+            </div>
+            <div class="pad-bottom"></div>
+            <nav class="tabbar">
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
+              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
+            </nav>
+          </section>
+
+          <!-- ============ CHAT ============ -->
+          <section id="chat" class="screen" data-screen="chat">
+            <div class="pad-top"></div>
+            <div class="hd">
+              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
+              <div class="right">CONCIERGE</div>
+            </div>
+            <div class="body">
+              <div class="chap" style="padding:0">
+                <span class="num">A conversation.</span>
+                <h1>Ask us <span class="italic">anything</span>, anytime.</h1>
+              </div>
+              <div class="rule"></div>
+              <div class="convo">
+                <div class="bubble guest">Where should I have dinner tonight?</div>
+                <div class="bubble host">
+                  If it's your first night, the Osteria del Tempo Perso is the postcard — try the orecchiette with cime di rapa, and the rosé. Want me to book?
+                  <span class="by">— Michele &amp; Ilaria (Concierge AI)</span>
+                </div>
+                <div class="bubble guest">What time does the sunset over the valley?</div>
+                <div class="bubble host">
+                  Around 20:45 tonight. Best spot: the terrace of the apartment, with a glass of Primitivo. The light hits the trulli first.
+                  <span class="by">— Michele &amp; Ilaria (Concierge AI)</span>
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">Wi-Fi password</span>
+                <span class="chip">Parking</span>
+                <span class="chip">Reach the apartment</span>
+                <span class="chip">Best beach today</span>
+              </div>
+              <div class="input">
+                <input type="text" placeholder="Type your question…" />
+                <span class="send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+              </div>
+            </div>
+            <div class="pad-bottom"></div>
+            <nav class="tabbar">
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
+              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
+            </nav>
+          </section>
+
+          <!-- ============ HOSTS ============ -->
+          <section id="host" class="screen" data-screen="host">
+            <div class="pad-top"></div>
+            <div class="hd">
+              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
+              <div class="right">CHAPTER V</div>
+            </div>
+            <div class="portrait">
+              <div class="initials">M &amp; I</div>
+              <div class="meta">
+                <span>Michele &amp; Ilaria</span>
+                <span>Hosts since 2022</span>
+              </div>
+            </div>
+            <div class="body">
+              <div class="chap" style="padding:0">
+                <span class="num">Chapter V.</span>
+                <h1>Hello, we're <span class="italic">Michele &amp; Ilaria</span>.</h1>
+              </div>
+              <div class="rule"></div>
+              <p class="pull">
+                Mi Casa was born from a love at first sight: walking through Ostuni's ancient
+                white streets, the breathtaking view over the Itria Valley and the sea.
+              </p>
+              <p>
+                We renovated the apartment in 2022 to offer every modern comfort while keeping
+                the soul of the white city. The name joins our two initials — and the idea of
+                feeling at home, away from home.
+              </p>
+              <div class="contact">
+                <div>
+                  <div class="l">Reach us anytime</div>
+                  <div class="v">+39 346 248 2556</div>
+                </div>
+                <a href="#">WhatsApp</a>
+              </div>
+            </div>
+            <div class="pad-bottom"></div>
+            <nav class="tabbar">
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
+              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
+              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
+            </nav>
+          </section>
+
+        </div>
+        <div class="caption">
+          <strong>Casa Bianca</strong> — Editorial. Serif typography (Fraunces), generous
+          whitespace, photo-led storytelling. Suited to boutique B&amp;Bs, design hotels and
+          properties with a voice.
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.querySelectorAll('.tab').forEach((t) => {
+        t.addEventListener('click', () => {
+          const target = t.dataset.tab
+          document.querySelectorAll('.tab').forEach((b) => b.classList.toggle('active', b.dataset.tab === target))
+          document.querySelectorAll('.screen').forEach((s) =>
+            s.classList.toggle('active', s.dataset.screen === target),
+          )
+          const screen = document.querySelector('.screen.active')
+          if (screen) screen.scrollTop = 0
+        })
+      })
+    </script>
+  </body>
+</html>

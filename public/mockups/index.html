@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>MiCasa · Premium guides — design directions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter+Tight:wght@400;500;600&family=Manrope:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1f1a14;
+        --paper: #f7f2e9;
+        --muted: #6b6157;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter Tight', system-ui, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.55;
+      }
+      .page { max-width: 1200px; margin: 0 auto; padding: 64px 24px 96px; }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #b07238;
+        font-weight: 600;
+      }
+      h1 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(40px, 6vw, 88px);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        margin: 18px 0 12px;
+      }
+      h1 em { font-style: italic; color: #b07238; }
+      .lede {
+        max-width: 640px;
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .grid {
+        margin-top: 64px;
+        display: grid;
+        gap: 28px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 880px) { .grid { grid-template-columns: 1fr 1fr; } }
+      .card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        border-radius: 24px;
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #ece4d6;
+        box-shadow: 0 1px 2px rgba(31,26,20,0.04), 0 30px 60px -30px rgba(31,26,20,0.18);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+      .card:hover { transform: translateY(-4px); box-shadow: 0 1px 2px rgba(31,26,20,0.04), 0 40px 80px -30px rgba(31,26,20,0.25); }
+      .card .preview { aspect-ratio: 16 / 10; position: relative; overflow: hidden; }
+      .card .body { padding: 26px 28px 30px; }
+      .card .tag {
+        display: inline-block; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+        font-weight: 600;
+      }
+      .card h2 {
+        font-weight: 400;
+        margin: 10px 0 8px;
+        font-size: 30px;
+        line-height: 1.05;
+      }
+      .card p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+      .swatches { display: flex; gap: 6px; margin-top: 18px; }
+      .swatches span {
+        width: 22px; height: 22px; border-radius: 50%;
+        border: 1px solid rgba(0,0,0,0.06);
+      }
+      .open {
+        margin-top: 22px; display: inline-flex; align-items: center; gap: 8px;
+        font-weight: 500; font-size: 14px;
+        border-bottom: 1px solid currentColor; padding-bottom: 2px;
+      }
+
+      /* Editorial preview */
+      .preview.editorial {
+        background: linear-gradient(135deg, #faf6ee 0%, #f0e6d4 100%);
+        padding: 40px 36px;
+        display: flex; flex-direction: column; justify-content: space-between;
+      }
+      .preview.editorial .num {
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 60px; color: #c2532a;
+        line-height: 1;
+      }
+      .preview.editorial .title {
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+        font-size: 56px; line-height: 1; color: #1f1a14;
+      }
+      .preview.editorial .meta {
+        font-family: 'Inter Tight', sans-serif; font-size: 11px;
+        letter-spacing: 0.22em; text-transform: uppercase; color: #6b6157;
+      }
+      .card.editorial .tag { color: #c2532a; }
+      .card.editorial h2 { font-family: 'Fraunces', serif; font-style: italic; }
+
+      /* Luxury preview */
+      .preview.luxury {
+        background: linear-gradient(180deg, #f4efe7 0%, #ebe3d6 100%);
+        padding: 56px 36px;
+        display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+        text-align: center;
+      }
+      .preview.luxury .rule {
+        width: 60px; height: 1px; background: #a88b58;
+      }
+      .preview.luxury .title {
+        font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
+        font-size: 56px; line-height: 1.05; color: #3a332c; letter-spacing: -0.01em;
+      }
+      .preview.luxury .meta {
+        font-family: 'Manrope', sans-serif; font-size: 10px; font-weight: 400;
+        letter-spacing: 0.32em; text-transform: uppercase; color: #8e8377;
+      }
+      .card.luxury .tag { color: #a88b58; }
+      .card.luxury h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; }
+
+      footer {
+        margin-top: 96px; padding-top: 24px; border-top: 1px solid #ece4d6;
+        font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 24px;
+        justify-content: space-between;
+      }
+      footer a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <p class="eyebrow">MiCasa · Premium guide template</p>
+      <h1>Two ways to <em>welcome</em> your guests.</h1>
+      <p class="lede">
+        The MiCasa guide can be styled to match the soul of any property — from a
+        charming B&amp;B to a quiet luxury villa. Below, two design directions of the
+        same app, ready to be tailored to your brand. Tap one to step inside.
+      </p>
+
+      <section class="grid">
+        <a class="card editorial" href="./editorial.html">
+          <div class="preview editorial">
+            <div>
+              <span class="meta">Direction A · Casa Bianca</span>
+              <div class="num">01.</div>
+            </div>
+            <div class="title">Editorial<br/><em>Magazine</em></div>
+          </div>
+          <div class="body">
+            <span class="tag">For boutique &amp; design properties</span>
+            <h2>Casa Bianca</h2>
+            <p>
+              Big magazine typography, generous whitespace, photo-led storytelling. The
+              guide reads like a print issue — every screen has a voice.
+            </p>
+            <div class="swatches" aria-hidden="true">
+              <span style="background:#faf6ee"></span>
+              <span style="background:#1f1a14"></span>
+              <span style="background:#c2532a"></span>
+              <span style="background:#5b6f86"></span>
+            </div>
+            <span class="open">Open the showcase →</span>
+          </div>
+        </a>
+
+        <a class="card luxury" href="./luxury.html">
+          <div class="preview luxury">
+            <span class="meta">Direction B · Casa Quieta</span>
+            <div class="title">Quiet<br/><em>Luxury</em></div>
+            <span class="rule" aria-hidden="true"></span>
+          </div>
+          <div class="body">
+            <span class="tag">For luxury villas &amp; high-end stays</span>
+            <h2>Casa Quieta</h2>
+            <p>
+              Monochrome cream and brass, hairline rules, hushed typography. The guide
+              whispers — refinement lives in the white space.
+            </p>
+            <div class="swatches" aria-hidden="true">
+              <span style="background:#f4efe7"></span>
+              <span style="background:#8e8377"></span>
+              <span style="background:#3a332c"></span>
+              <span style="background:#a88b58"></span>
+            </div>
+            <span class="open">Open the showcase →</span>
+          </div>
+        </a>
+      </section>
+
+      <footer>
+        <span>MiCasa Ostuni · Premium guide template — Michele &amp; Ilaria</span>
+        <a href="../">Back to the live app</a>
+      </footer>
+    </main>
+  </body>
+</html>
