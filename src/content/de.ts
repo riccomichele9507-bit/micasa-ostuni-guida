@@ -231,6 +231,10 @@ export const de: GuideContent = {
       q: 'Ist eine zusätzliche Reinigung möglich?',
       a: 'Natürlich — wir bitten um zwei Tage Vorankündigung, die Kosten betragen 30 €.',
     },
+    {
+      q: 'Was tun, wenn das Warmwasser ausfällt oder die Therme nicht funktioniert?',
+      a: 'Bei Problemen mit dem Warmwasser oder der Therme schreiben Sie uns bitte sofort über WhatsApp unter +39 346 248 2556, damit wir Ihnen so schnell wie möglich helfen können.',
+    },
   ],
   reviews: [
     'Schöne, renovierte Wohnung. Tolle Terrasse zum Entspannen und Kochen. Wir empfehlen sie :)',

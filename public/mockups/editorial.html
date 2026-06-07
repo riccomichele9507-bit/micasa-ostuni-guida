@@ -118,23 +118,131 @@
       .screen::-webkit-scrollbar { display: none; }
       .screen.active { display: block; }
       .screen .pad-top { height: 56px; }       /* room for the notch */
-      .screen .pad-bottom { height: 80px; }    /* room for tab bar */
+      .screen .pad-bottom { height: 28px; }    /* safe bottom space (no tab bar) */
 
-      /* Bottom tab bar (faux, inside each screen) */
-      .tabbar {
-        position: absolute; left: 0; right: 0; bottom: 0;
-        display: flex; justify-content: space-around; align-items: center;
-        height: 64px; padding-bottom: 12px;
-        background: rgba(250, 246, 238, 0.96);
-        border-top: 1px solid var(--rule); backdrop-filter: blur(10px);
+      /* ============== Language gate (shows on open) ============== */
+      .lang-gate {
+        position: absolute; inset: 0; z-index: 50;
+        background: var(--paper);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 0 36px; text-align: center;
+        transition: opacity 0.32s ease, visibility 0.32s ease;
       }
-      .tabbar a {
-        flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
-        font-size: 10px; color: var(--muted); text-decoration: none; font-weight: 500;
+      .lang-gate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+      .lang-gate .mark {
+        width: 46px; height: 46px; border-radius: 12px; background: var(--terracotta);
+        display: grid; place-items: center; color: #faf6ee; margin-bottom: 20px;
       }
-      .tabbar a svg { opacity: 0.7; }
-      .tabbar a.active { color: var(--terracotta); }
-      .tabbar a.active svg { opacity: 1; }
+      .lang-gate .mark svg { width: 22px; height: 22px; }
+      .lang-gate .eyebrow {
+        font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+        color: var(--muted); font-weight: 600;
+      }
+      .lang-gate h2 {
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+        font-size: 28px; line-height: 1.05; margin: 6px 0 6px; letter-spacing: -0.015em;
+      }
+      .lang-gate p { font-size: 13px; color: var(--muted); margin: 0 0 24px; max-width: 280px; }
+      .lang-gate .langs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 300px; }
+      .lang-gate .langs button {
+        appearance: none; border: 1px solid var(--rule); background: #fff; color: var(--ink);
+        font: inherit; padding: 14px 10px; border-radius: 12px;
+        cursor: pointer; transition: all 0.18s ease;
+        display: flex; flex-direction: column; gap: 4px; align-items: center;
+      }
+      .lang-gate .langs button:hover { border-color: var(--terracotta); }
+      .lang-gate .langs button .flag { font-size: 22px; line-height: 1; }
+      .lang-gate .langs button .lbl {
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 700;
+      }
+      .lang-gate .langs button:hover .lbl { color: var(--terracotta); }
+
+      /* ============== Concierge FAB (every screen, like the live app) ============== */
+      .fab {
+        position: absolute; z-index: 30;
+        right: 18px; bottom: 24px;
+        width: 54px; height: 54px; border-radius: 50%;
+        background: var(--terracotta); color: #faf6ee;
+        display: grid; place-items: center;
+        text-decoration: none;
+        box-shadow: 0 14px 28px -10px rgba(194,83,42,0.6), 0 2px 4px rgba(20,17,13,0.18);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      .fab:hover { transform: translateY(-2px); box-shadow: 0 18px 32px -10px rgba(194,83,42,0.65), 0 2px 4px rgba(20,17,13,0.2); }
+      .fab svg { width: 22px; height: 22px; }
+
+      /* ============== Home header dropdown menu ============== */
+      .hd .menu { position: relative; }
+      .hd .menu-btn {
+        appearance: none; border: 0; background: transparent; padding: 8px;
+        cursor: pointer; color: var(--ink); border-radius: 8px;
+        display: grid; place-items: center;
+        transition: background-color 0.15s ease;
+      }
+      .hd .menu-btn:hover { background: rgba(31,26,20,0.06); }
+      .hd .menu-btn svg { width: 20px; height: 20px; }
+      .hd .menu-pop {
+        position: absolute; top: calc(100% + 6px); right: 0;
+        background: #fff; border: 1px solid var(--rule); border-radius: 12px;
+        box-shadow: 0 14px 28px -12px rgba(20,17,13,0.2), 0 2px 4px rgba(20,17,13,0.05);
+        padding: 8px; min-width: 184px; z-index: 40;
+        opacity: 0; visibility: hidden; transform: translateY(-4px);
+        transition: opacity 0.16s ease, visibility 0.16s ease, transform 0.16s ease;
+      }
+      .hd .menu-pop.open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .hd .menu-pop .menu-label {
+        font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase;
+        color: var(--muted); font-weight: 700; padding: 4px 10px 6px;
+      }
+      .hd .menu-pop button {
+        appearance: none; border: 0; background: transparent;
+        font: inherit; font-size: 13px; padding: 9px 10px; border-radius: 8px;
+        cursor: pointer; width: 100%; text-align: left; color: var(--ink);
+        display: flex; align-items: center; gap: 10px;
+      }
+      .hd .menu-pop button:hover { background: var(--paper); }
+      .hd .menu-pop button .flag { font-size: 16px; line-height: 1; }
+
+      /* Hide the FAB when its destination screen is the active one */
+      .fab.hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(0.85); }
+
+      /* ============== Host · WhatsApp CTA (top of Hosts screen) ============== */
+      #host .wa-cta {
+        display: flex; align-items: center; gap: 14px;
+        padding: 14px 16px; margin: 14px 20px 0;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: #fff;
+        border-radius: 14px; text-decoration: none;
+        box-shadow: 0 12px 28px -12px rgba(18,140,126,0.55);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      #host .wa-cta:hover { transform: translateY(-2px); box-shadow: 0 16px 32px -12px rgba(18,140,126,0.65); }
+      #host .wa-cta .wa-icon {
+        width: 38px; height: 38px; border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: grid; place-items: center; color: #fff; flex-shrink: 0;
+      }
+      #host .wa-cta .wa-icon svg { width: 22px; height: 22px; }
+      #host .wa-cta .wa-text { flex: 1; min-width: 0; line-height: 1.2; }
+      #host .wa-cta .wa-l {
+        display: block; font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase;
+        color: rgba(255,255,255,0.88); font-weight: 700;
+      }
+      #host .wa-cta .wa-n {
+        display: block; font-size: 15px; margin-top: 2px; font-weight: 600; letter-spacing: 0.04em;
+      }
+      #host .wa-cta .wa-arrow { font-size: 18px; opacity: 0.9; flex-shrink: 0; }
+
+      /* ============== Back row (top of detail screens) ============== */
+      .back-row {
+        appearance: none; border: 0; background: transparent; cursor: pointer;
+        font: inherit; padding: 6px 12px 6px 6px; margin: 0 14px;
+        display: inline-flex; align-items: center; gap: 8px;
+        color: var(--muted); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700;
+        border-radius: 999px;
+        transition: color 0.15s ease, background-color 0.15s ease;
+      }
+      .back-row:hover { color: var(--terracotta); background: rgba(194,83,42,0.06); }
+      .back-row svg { width: 14px; height: 14px; }
 
       /* Shared screen header (small) */
       .hd {
@@ -172,96 +280,219 @@
       }
       .rule { height: 1px; background: var(--ink); opacity: 0.85; width: 36px; margin: 18px 0; }
 
-      /* ============== Screen 1: HOME ============== */
+      /* ============== Screen 1: HOME (redesigned · all sections visible) ============== */
       #home .hero {
-        position: relative; height: 460px; overflow: hidden;
-        margin: 16px 20px 0; border-radius: 12px;
+        position: relative; height: 280px; overflow: hidden;
+        margin: 14px 20px 0; border-radius: 12px;
       }
       #home .hero img {
         position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
       }
       #home .hero::after {
-        content: ''; position: absolute; inset: 0;
-        background: linear-gradient(180deg, rgba(20,17,13,0.05) 0%, rgba(20,17,13,0.55) 60%, rgba(20,17,13,0.85) 100%);
+        content: ''; position: absolute; inset: auto 0 0 0; height: 35%;
+        background: linear-gradient(180deg, rgba(20,17,13,0) 0%, rgba(20,17,13,0.18) 100%);
+        pointer-events: none;
       }
-      #home .hero .overlay {
-        position: absolute; inset: 0; padding: 22px 22px 24px;
-        display: flex; flex-direction: column; justify-content: space-between;
-        color: #faf6ee; z-index: 2;
+
+      /* Property header */
+      #home .property { padding: 22px 28px 0; }
+      #home .property .eyebrow {
+        font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+        color: var(--muted); font-weight: 600;
       }
-      #home .hero .top-meta {
-        display: flex; justify-content: space-between; font-size: 10px;
-        letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600;
-      }
-      #home .hero h1 {
+      #home .property .name {
         font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
-        font-size: 64px; line-height: 0.95; letter-spacing: -0.02em; margin: 0;
+        font-size: 30px; line-height: 1; letter-spacing: -0.015em;
+        margin: 6px 0 6px;
       }
-      #home .hero h1 .roman { font-style: normal; display: block; font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; font-family: 'Inter Tight'; font-weight: 600; }
-      #home .quote {
-        padding: 28px 28px 8px; font-size: 17px; line-height: 1.55; color: var(--ink);
-        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+      #home .property .sub {
+        font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 96%;
       }
-      #home .actions { padding: 12px 20px 0; }
-      #home .chat-cta {
-        display: flex; align-items: center; gap: 14px;
-        padding: 14px 16px;
+
+      /* Reach the apartment CTA */
+      #home .reach {
+        margin: 18px 20px 0;
+        display: flex; align-items: center; gap: 12px;
+        padding: 12px 14px 12px 12px;
+        background: #fff; border: 1px solid var(--rule);
+        border-radius: 12px; text-decoration: none; color: inherit;
+        transition: border-color 0.15s ease, background-color 0.15s ease;
+      }
+      #home .reach:hover { border-color: var(--terracotta); background: #fffbf6; }
+      #home .reach .pin {
+        width: 32px; height: 32px; border-radius: 50%;
+        background: var(--terra-soft);
+        display: grid; place-items: center; color: var(--terracotta);
+        flex-shrink: 0;
+      }
+      #home .reach .pin svg { width: 18px; height: 18px; }
+      #home .reach .copy { flex: 1; min-width: 0; line-height: 1.2; }
+      #home .reach .copy .l {
+        display: block; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+        color: var(--muted); font-weight: 700;
+      }
+      #home .reach .copy .t {
+        display: block; font-size: 13.5px; margin-top: 2px; color: var(--ink);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      #home .reach .open {
+        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--terracotta); font-weight: 700; flex-shrink: 0;
+      }
+
+      /* Concierge strip */
+      #home .concierge {
+        margin: 10px 20px 0;
+        display: flex; align-items: center; gap: 12px;
+        padding: 12px 14px 12px 12px;
         background: var(--ink); color: #faf6ee;
-        border-radius: 14px;
-        text-decoration: none;
+        border-radius: 12px; text-decoration: none;
       }
-      #home .chat-cta .dot {
-        width: 38px; height: 38px; border-radius: 50%;
+      #home .concierge .spark {
+        width: 32px; height: 32px; border-radius: 50%;
         background: var(--terracotta);
         display: grid; place-items: center; color: #faf6ee;
-        font-family: 'Fraunces', serif; font-style: italic; font-size: 20px;
+        font-family: 'Fraunces', serif; font-style: italic; font-size: 16px;
+        flex-shrink: 0;
       }
-      #home .chat-cta .label { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,246,238,0.65); font-weight: 600; }
-      #home .chat-cta .text { font-size: 15px; margin-top: 1px; }
-      #home .chap-list { margin-top: 20px; padding: 0 28px; }
-      #home .chap-list .row {
-        display: grid; grid-template-columns: 32px 1fr auto; align-items: baseline; gap: 10px;
-        padding: 14px 0; border-top: 1px solid var(--rule);
+      #home .concierge .copy { flex: 1; min-width: 0; line-height: 1.2; }
+      #home .concierge .copy .l {
+        display: block; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+        color: rgba(250,246,238,0.6); font-weight: 700;
       }
-      #home .chap-list .row:last-child { border-bottom: 1px solid var(--rule); }
-      #home .chap-list .row .n { font-family: 'Fraunces', serif; font-style: italic; color: var(--terracotta); font-size: 16px; }
-      #home .chap-list .row .t { font-family: 'Fraunces', serif; font-size: 18px; line-height: 1.15; }
-      #home .chap-list .row .s { font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+      #home .concierge .copy .t {
+        display: block; font-size: 13px; margin-top: 2px;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      #home .concierge .arrow { font-size: 16px; opacity: 0.7; flex-shrink: 0; }
 
-      /* ============== Screen 2: CHECK-IN ============== */
-      #check .hero {
-        margin: 16px 20px 0; height: 360px; overflow: hidden; border-radius: 12px; position: relative;
+      /* Section list (Villa Serena style, editorial) */
+      #home .sections { margin: 22px 28px 0; }
+      #home .sections .label {
+        font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+        color: var(--muted); font-weight: 600; margin-bottom: 4px;
       }
-      #check .hero img { width: 100%; height: 100%; object-fit: cover; }
-      #check .body { padding: 22px 28px 0; }
-      #check .stepgrid {
-        margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      #home .sections .row {
+        display: flex; align-items: center; gap: 14px;
+        padding: 13px 0; border-top: 1px solid var(--rule);
+        cursor: pointer; transition: background-color 0.15s ease;
       }
-      #check .step {
-        border: 1px solid var(--rule); padding: 14px;
-        border-radius: 10px; background: #fff;
+      #home .sections .row:last-child { border-bottom: 1px solid var(--rule); }
+      #home .sections .row:hover { background-color: rgba(31,26,20,0.025); }
+      #home .sections .row .ico {
+        width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+        background: var(--terra-soft);
+        display: grid; place-items: center; color: var(--terracotta);
       }
-      #check .step .n { font-family: 'Fraunces', serif; font-style: italic; color: var(--terracotta); font-size: 18px; }
-      #check .step .t { font-size: 13px; font-weight: 500; margin-top: 6px; }
-      #check .step .s { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
-      #check .lock {
-        margin-top: 16px; padding: 22px; border-radius: 12px;
-        background: linear-gradient(135deg, #f4e2d6 0%, #f9ead8 100%);
-        border: 1px solid #ecc9af;
+      #home .sections .row .ico svg { width: 18px; height: 18px; }
+      #home .sections .row .ti { flex: 1; min-width: 0; }
+      #home .sections .row .ti .t {
+        display: block; font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+        font-size: 18px; line-height: 1.1; color: var(--ink);
       }
-      #check .lock .lbl { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--terracotta); font-weight: 700; }
-      #check .lock .code { font-family: 'Fraunces', serif; font-weight: 500; font-size: 64px; letter-spacing: 0.15em; color: var(--ink); margin-top: 6px; line-height: 1; }
-      #check .lock .hint { font-size: 12px; color: var(--muted); margin-top: 8px; }
+      #home .sections .row .ti .s {
+        display: block; font-size: 11.5px; color: var(--muted); margin-top: 2px;
+      }
+      #home .sections .row .chev {
+        color: var(--muted); opacity: 0.55; flex-shrink: 0;
+        display: grid; place-items: center;
+      }
+
+      /* ============== Screen 2: CHECK-IN (mirrors live app) ============== */
+      #check .body { padding: 18px 20px 0; }
+      #check .chap-head {
+        padding: 0 0 14px;
+      }
+      #check .chap-head .num {
+        font-family: 'Fraunces', serif; font-style: italic; color: var(--terracotta); font-size: 13px;
+      }
+      #check .chap-head h1 {
+        font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+        font-size: 34px; line-height: 1; letter-spacing: -0.02em; margin: 6px 0 0;
+      }
+      #check .timepill {
+        display: inline-block; padding: 6px 14px; border-radius: 999px;
+        background: var(--cool-soft); color: var(--cool);
+        font-size: 12.5px; font-weight: 600; margin-top: 4px;
+      }
       #check .addr {
-        margin-top: 16px; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 10px;
+        margin-top: 14px; padding: 12px 14px;
+        display: flex; align-items: center; justify-content: space-between; gap: 10px;
+        background: #fff; border: 1px solid var(--rule); border-radius: 14px;
+        box-shadow: 0 1px 2px rgba(20,17,13,0.04);
+      }
+      #check .addr .where {
+        display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;
+      }
+      #check .addr .where svg { color: var(--terracotta); flex-shrink: 0; }
+      #check .addr .where .name {
+        font-size: 13.5px; font-weight: 500; color: var(--ink);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      #check .addr .open {
+        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--terracotta); font-weight: 700; text-decoration: none;
+        white-space: nowrap;
+      }
+      #check .gallery {
+        margin-top: 16px;
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+      }
+      #check .gallery .frame {
+        position: relative; aspect-ratio: 1; overflow: hidden; border-radius: 10px;
+        border: 1px solid var(--rule); cursor: zoom-in;
+      }
+      #check .gallery .frame img {
+        width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;
+      }
+      #check .gallery .frame:hover img { transform: scale(1.05); }
+      #check .gallery .frame .zoom-badge {
+        position: absolute; top: 6px; right: 6px;
+        width: 22px; height: 22px; border-radius: 50%;
+        background: rgba(20,17,13,0.55); color: #faf6ee;
+        display: grid; place-items: center;
+        opacity: 0; transition: opacity 0.2s ease;
+      }
+      #check .gallery .frame:hover .zoom-badge { opacity: 1; }
+      #check .gallery .frame .zoom-badge svg { width: 12px; height: 12px; }
+      #check .gallery-hint {
+        margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--muted); font-weight: 600;
+      }
+      #check .gallery-hint svg { width: 12px; height: 12px; }
+      #check .points {
+        margin: 18px 0 0; padding: 0; list-style: none;
+        font-size: 14px; line-height: 1.55; color: var(--muted);
+      }
+      #check .points li {
+        padding: 7px 0 7px 18px; position: relative;
+      }
+      #check .points li::before {
+        content: ''; position: absolute; left: 0; top: 16px;
+        width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta);
+      }
+      #check .lock {
+        margin-top: 18px; padding: 14px 16px;
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        background: #fff;
+        background: linear-gradient(135deg, #f9ead8 0%, #f4e2d6 100%);
+        border: 1px solid #ecc9af; border-radius: 14px;
       }
-      #check .addr .name { font-size: 13px; }
-      #check .addr a {
-        font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terracotta);
-        font-weight: 700; text-decoration: none;
+      #check .lock .info { min-width: 0; }
+      #check .lock .lbl {
+        font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--terracotta); font-weight: 700;
       }
+      #check .lock .code {
+        font-family: 'Fraunces', serif; font-weight: 500; font-style: italic;
+        font-size: 32px; letter-spacing: 0.16em; color: var(--ink); margin-top: 2px; line-height: 1.1;
+      }
+      #check .lock .copy-btn {
+        appearance: none; border: 1px solid var(--terracotta); background: #fff; color: var(--terracotta);
+        font: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+        padding: 9px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+      }
+      #check .lock .copy-btn:hover { background: var(--terracotta); color: #faf6ee; }
 
       /* ============== Screen 3: ESPLORA ============== */
       #explore .body { padding: 24px 28px 0; }
@@ -385,114 +616,202 @@
       <main class="stage">
         <div class="device" aria-label="iPhone preview">
 
+          <!-- ============ LANGUAGE GATE ============ -->
+          <div class="lang-gate" id="langGate" role="dialog" aria-label="Choose language">
+            <div class="mark">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 2 12h3v9h6v-6h2v6h6v-9h3z"/></svg>
+            </div>
+            <div class="eyebrow">Casa Bianca · MiCasa Ostuni</div>
+            <h2>Welcome — choose your language</h2>
+            <p>Read the guide in your preferred language.</p>
+            <div class="langs">
+              <button type="button" data-lang="it"><span class="flag">🇮🇹</span><span class="lbl">Italiano</span></button>
+              <button type="button" data-lang="en"><span class="flag">🇬🇧</span><span class="lbl">English</span></button>
+              <button type="button" data-lang="fr"><span class="flag">🇫🇷</span><span class="lbl">Français</span></button>
+              <button type="button" data-lang="de"><span class="flag">🇩🇪</span><span class="lbl">Deutsch</span></button>
+            </div>
+          </div>
+
           <!-- ============ HOME ============ -->
           <section id="home" class="screen active" data-screen="home">
             <div class="pad-top"></div>
             <div class="hd">
               <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v9h6v-6h2v6h6v-9h3z"/></svg></span>
-              <div class="right">EN · IT · FR · DE &nbsp;·&nbsp; ☰</div>
+              <div class="menu">
+                <button type="button" class="menu-btn" data-toggle-menu aria-label="Menu" aria-haspopup="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <line x1="4" y1="7" x2="20" y2="7"/>
+                    <line x1="4" y1="12" x2="20" y2="12"/>
+                    <line x1="4" y1="17" x2="20" y2="17"/>
+                  </svg>
+                </button>
+                <div class="menu-pop" data-menu-pop role="menu">
+                  <div class="menu-label">Language</div>
+                  <button type="button" data-lang-set="it" role="menuitem"><span class="flag">🇮🇹</span>Italiano</button>
+                  <button type="button" data-lang-set="en" role="menuitem"><span class="flag">🇬🇧</span>English</button>
+                  <button type="button" data-lang-set="fr" role="menuitem"><span class="flag">🇫🇷</span>Français</button>
+                  <button type="button" data-lang-set="de" role="menuitem"><span class="flag">🇩🇪</span>Deutsch</button>
+                </div>
+              </div>
             </div>
 
             <div class="hero">
               <img src="../images/checkin-esterni.webp" alt="" />
-              <div class="overlay">
-                <div class="top-meta">
-                  <span>Issue 01 · Summer</span>
-                  <span>MiCasa · Ostuni</span>
-                </div>
-                <h1>
-                  <span class="roman">Welcome</span>
-                  home<em style="font-style:italic">.</em>
-                </h1>
+            </div>
+
+            <div class="property">
+              <div class="name">MiCasa Ostuni</div>
+              <div class="sub">A curated guide to the apartment, the white city and the Itria Valley — by Michele &amp; Ilaria.</div>
+            </div>
+
+            <a class="reach" href="https://maps.app.goo.gl/" target="_blank" rel="noopener">
+              <span class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-7.5 8-13a8 8 0 0 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+              <span class="copy">
+                <span class="l">Reach the apartment</span>
+                <span class="t">Vicolo Andrea Costa 12/14 · Ostuni</span>
+              </span>
+              <span class="open">Maps →</span>
+            </a>
+
+            <a class="concierge" href="#">
+              <span class="spark">✦</span>
+              <span class="copy">
+                <span class="l">Concierge</span>
+                <span class="t">Ask MiCasa — Wi-Fi, parking, dinner tonight…</span>
+              </span>
+              <span class="arrow">→</span>
+            </a>
+
+            <div class="sections">
+              <div class="label">Index</div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg></span>
+                <span class="ti"><span class="t">Welcome home</span><span class="s">A note from the hosts</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 9-9m-3 3 3 3"/></svg></span>
+                <span class="ti"><span class="t">Check-in</span><span class="s">Address, masterlock code, photos</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17V9a2 2 0 0 1 2-2h6l4 5v5"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/><path d="M9 17h6"/></svg></span>
+                <span class="ti"><span class="t">Parking</span><span class="s">Where to leave the car</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a17 17 0 0 1 20 0"/><path d="M5 13a12 12 0 0 1 14 0"/><path d="M8.5 16.5a7 7 0 0 1 7 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></span>
+                <span class="ti"><span class="t">Wi-Fi</span><span class="s">Network and password</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+                <span class="ti"><span class="t">House rules</span><span class="s">A few small things, kindly</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg></span>
+                <span class="ti"><span class="t">Things to do &amp; see</span><span class="s">Our favourite places</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8a3 3 0 0 0 3 3M7 3v8a3 3 0 0 1-3 3"/><path d="M7 14v7"/><path d="M17 3c-1.5 0-3 2-3 5s1.5 4 3 4v9"/></svg></span>
+                <span class="ti"><span class="t">Where to eat</span><span class="s">Trattorias, wines, coffee</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18l-2 14H5z"/><path d="M9 6V4h6v2"/><path d="M10 11v6M14 11v6"/></svg></span>
+                <span class="ti"><span class="t">Waste sorting</span><span class="s">Day-by-day calendar</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 10v5"/><path d="M12 17.5v.5"/></svg></span>
+                <span class="ti"><span class="t">Emergencies</span><span class="s">Numbers to keep close</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5"/><path d="m9 8 4 4-4 4"/><path d="M3 12h10"/></svg></span>
+                <span class="ti"><span class="t">Check-out</span><span class="s">Departure, keys, leftovers</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+              </div>
+
+              <div class="row">
+                <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M5.6 18.4l2-2M16.4 7.6l2-2"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg></span>
+                <span class="ti"><span class="t">Ask MiCasa</span><span class="s">Your AI concierge — 24/7</span></span>
+                <span class="chev"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
               </div>
             </div>
 
-            <p class="quote">
-              “The old white streets, the up and downs, the breathtaking view over the Itria
-              Valley. This is your home in the white city.”
-            </p>
-
-            <div class="actions">
-              <a class="chat-cta" href="#">
-                <span class="dot">✦</span>
-                <span style="flex:1">
-                  <span class="label">Concierge</span>
-                  <span class="text">Ask me anything — anytime.</span>
-                </span>
-                <span style="font-size:18px">→</span>
-              </a>
-            </div>
-
-            <div class="chap-list">
-              <div class="row"><span class="n">I.</span><span class="t">Your arrival</span><span class="s">Check‑in</span></div>
-              <div class="row"><span class="n">II.</span><span class="t">The apartment, in detail</span><span class="s">Essentials</span></div>
-              <div class="row"><span class="n">III.</span><span class="t">Our favourite places</span><span class="s">Explore</span></div>
-              <div class="row"><span class="n">IV.</span><span class="t">The tables we love</span><span class="s">Eat</span></div>
-              <div class="row"><span class="n">V.</span><span class="t">Hello, we're the hosts</span><span class="s">Story</span></div>
-            </div>
-
             <div class="pad-bottom"></div>
-            <nav class="tabbar">
-              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
-            </nav>
           </section>
 
           <!-- ============ CHECK-IN ============ -->
           <section id="check" class="screen" data-screen="check">
             <div class="pad-top"></div>
-            <div class="hd">
-              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
-              <div class="right">CHAPTER I</div>
-            </div>
-            <div class="hero">
-              <img src="../images/checkin-ingresso.webp" alt="" />
-            </div>
+            <button type="button" class="back-row" data-back>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <span>Home</span>
+            </button>
             <div class="body">
-              <div class="chap" style="padding:0">
-                <span class="num">Chapter I.</span>
-                <h1>Your arrival, <span class="italic">step by step</span>.</h1>
+              <div class="chap-head">
+                <span class="num">Chapter II.</span>
+                <h1>Check-in</h1>
               </div>
-              <div class="rule"></div>
-              <div class="stepgrid">
-                <div class="step"><div class="n">01.</div><div class="t">Park</div><div class="s">Free on Vico Costa, or covered options at 5–10 min walk.</div></div>
-                <div class="step"><div class="n">02.</div><div class="t">Find the door</div><div class="s">Vicolo Andrea Costa 12/14, on the left.</div></div>
-                <div class="step"><div class="n">03.</div><div class="t">The masterlock</div><div class="s">A small black box, to the side of the door.</div></div>
-                <div class="step"><div class="n">04.</div><div class="t">Welcome in</div><div class="s">Both blue doors are yours. One leads to the terrace.</div></div>
-              </div>
-              <div class="lock">
-                <div class="lbl">Masterlock code</div>
-                <div class="code">3 6 9 8</div>
-                <div class="hint">Tap to copy · Same code on the way out.</div>
-              </div>
+              <span class="timepill">After 2:00 PM</span>
+
               <div class="addr">
-                <div>
-                  <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600">Address</div>
-                  <div class="name">Vicolo Andrea Costa 12/14 · Ostuni, BR</div>
+                <div class="where">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-7.5 8-13a8 8 0 0 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                  <span class="name">Vicolo Andrea Costa 12/14</span>
                 </div>
-                <a href="#">Open in Maps →</a>
+                <a class="open" href="https://maps.app.goo.gl/6VDT1EeEa6MPnMoQA" target="_blank" rel="noopener">Maps →</a>
+              </div>
+
+              <div class="gallery">
+                <div class="frame"><img src="../images/checkin-ingresso.webp" alt="Front door" /><span class="zoom-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg></span></div>
+                <div class="frame"><img src="../images/checkin-esterni.webp" alt="Apartment exterior" /><span class="zoom-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg></span></div>
+                <div class="frame"><img src="../images/checkin-01.webp" alt="Apartment interior" /><span class="zoom-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg></span></div>
+              </div>
+              <div class="gallery-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg>
+                Tap a photo to enlarge
+              </div>
+
+              <ul class="points">
+                <li>Check-in is available from 2:00 PM.</li>
+                <li>We will notify you if the house is ready earlier for an early check-in.</li>
+                <li>The house has self check-in.</li>
+                <li>Both blue doors are reserved for you: one leads to the apartment, the other to the terrace.</li>
+              </ul>
+
+              <div class="lock">
+                <div class="info">
+                  <div class="lbl">Masterlock code (keys)</div>
+                  <div class="code">3698</div>
+                </div>
+                <button type="button" class="copy-btn">Copy</button>
               </div>
             </div>
             <div class="pad-bottom"></div>
-            <nav class="tabbar">
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
-              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
-            </nav>
           </section>
 
           <!-- ============ EXPLORE ============ -->
           <section id="explore" class="screen" data-screen="explore">
             <div class="pad-top"></div>
-            <div class="hd">
-              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
-              <div class="right">CHAPTER III</div>
-            </div>
+            <button type="button" class="back-row" data-back>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <span>Home</span>
+            </button>
             <div class="body">
               <div class="chap" style="padding:0">
                 <span class="num">Chapter III.</span>
@@ -524,22 +843,15 @@
               </article>
             </div>
             <div class="pad-bottom"></div>
-            <nav class="tabbar">
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
-              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
-            </nav>
           </section>
 
           <!-- ============ CHAT ============ -->
           <section id="chat" class="screen" data-screen="chat">
             <div class="pad-top"></div>
-            <div class="hd">
-              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
-              <div class="right">CONCIERGE</div>
-            </div>
+            <button type="button" class="back-row" data-back>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <span>Home</span>
+            </button>
             <div class="body">
               <div class="chap" style="padding:0">
                 <span class="num">A conversation.</span>
@@ -570,22 +882,27 @@
               </div>
             </div>
             <div class="pad-bottom"></div>
-            <nav class="tabbar">
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
-              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
-            </nav>
           </section>
 
           <!-- ============ HOSTS ============ -->
           <section id="host" class="screen" data-screen="host">
             <div class="pad-top"></div>
-            <div class="hd">
-              <span class="home-mark"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="m15 18-6-6 6-6"/></svg></span>
-              <div class="right">CHAPTER V</div>
-            </div>
+            <button type="button" class="back-row" data-back>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <span>Home</span>
+            </button>
+
+            <a class="wa-cta" href="https://wa.me/393462482556" target="_blank" rel="noopener">
+              <span class="wa-icon">
+                <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.6L4 29l7.6-2c1.9 1 4.1 1.6 6.4 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.5 1.2 1.2-4.4-.3-.4c-1.1-1.7-1.7-3.7-1.7-5.6 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10zm5.5-7.5c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.6 0-1.9-1-3.1-2-4.4-4.2-.3-.6.3-.5.9-1.7.1-.2 0-.4-.1-.5l-.7-1.6c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.4-.3.3-1 .9-1 2.3 0 1.4 1 2.7 1.2 2.9.1.2 2 3 4.8 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+              </span>
+              <span class="wa-text">
+                <span class="wa-l">Write us on WhatsApp</span>
+                <span class="wa-n">+39 346 248 2556</span>
+              </span>
+              <span class="wa-arrow">→</span>
+            </a>
+
             <div class="portrait">
               <div class="initials">M &amp; I</div>
               <div class="meta">
@@ -594,37 +911,29 @@
               </div>
             </div>
             <div class="body">
-              <div class="chap" style="padding:0">
-                <span class="num">Chapter V.</span>
+              <div class="chap-head" style="padding:0">
+                <span class="num">Chapter VI.</span>
                 <h1>Hello, we're <span class="italic">Michele &amp; Ilaria</span>.</h1>
               </div>
-              <div class="rule"></div>
               <p class="pull">
-                Mi Casa was born from a love at first sight: walking through Ostuni's ancient
-                white streets, the breathtaking view over the Itria Valley and the sea.
+                MiCasa was born from a land rich in culture and tradition, and from
+                Michele and Ilaria's genuine love for hospitality — a place to relax, but
+                also to discover the territory and the ancient Apulian tradition.
               </p>
               <p>
-                We renovated the apartment in 2022 to offer every modern comfort while keeping
-                the soul of the white city. The name joins our two initials — and the idea of
-                feeling at home, away from home.
+                The name recalls hospitality and the feeling of being at home away from
+                home — it joins the initials of the two owners. It is an apartment,
+                completely renovated in 2022 to offer all the comforts of a modern home
+                while keeping the tradition and typical taste of the White City.
               </p>
-              <div class="contact">
-                <div>
-                  <div class="l">Reach us anytime</div>
-                  <div class="v">+39 346 248 2556</div>
-                </div>
-                <a href="#">WhatsApp</a>
-              </div>
             </div>
             <div class="pad-bottom"></div>
-            <nav class="tabbar">
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11 12 4l9 7v9h-6v-6h-6v6H3z"/></svg>Home</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>Arrival</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 3-3 6-3-9z"/></svg>Explore</a>
-              <a><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 4h14v9a2 2 0 0 1-2 2H10l-5 4z"/></svg>Concierge</a>
-              <a class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>Hosts</a>
-            </nav>
           </section>
+
+          <!-- ============ Concierge FAB (always visible, like the live app) ============ -->
+          <a class="fab" href="#" data-fab title="Ask MiCasa" aria-label="Ask MiCasa">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 14 9l7 2-7 2-2 7-2-7-7-2 7-2z"/></svg>
+          </a>
 
         </div>
         <div class="caption">
@@ -636,15 +945,82 @@
     </div>
 
     <script>
+      // Switch to a given screen + sync the top showcase tabs.
+      // Also hides the FAB when the destination is the Concierge screen itself.
+      function showScreen(target) {
+        document.querySelectorAll('.tab').forEach((b) =>
+          b.classList.toggle('active', b.dataset.tab === target),
+        )
+        document.querySelectorAll('.screen').forEach((s) =>
+          s.classList.toggle('active', s.dataset.screen === target),
+        )
+        const screen = document.querySelector('.screen.active')
+        if (screen) screen.scrollTop = 0
+        const fab = document.querySelector('.fab')
+        if (fab) fab.classList.toggle('hidden', target === 'chat')
+        // Always close any open dropdown
+        document.querySelectorAll('[data-menu-pop].open').forEach((p) => p.classList.remove('open'))
+      }
+
+      // Top showcase tabs
       document.querySelectorAll('.tab').forEach((t) => {
-        t.addEventListener('click', () => {
-          const target = t.dataset.tab
-          document.querySelectorAll('.tab').forEach((b) => b.classList.toggle('active', b.dataset.tab === target))
-          document.querySelectorAll('.screen').forEach((s) =>
-            s.classList.toggle('active', s.dataset.screen === target),
-          )
-          const screen = document.querySelector('.screen.active')
-          if (screen) screen.scrollTop = 0
+        t.addEventListener('click', () => showScreen(t.dataset.tab))
+      })
+
+      // Back rows (every detail screen) → return to Home
+      document.querySelectorAll('[data-back]').forEach((b) => {
+        b.addEventListener('click', () => showScreen('home'))
+      })
+
+      // FAB sparkle → open Concierge
+      document.querySelectorAll('[data-fab]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault()
+          showScreen('chat')
+        })
+      })
+
+      // Language gate: hide on choice
+      const gate = document.getElementById('langGate')
+      document.querySelectorAll('.lang-gate [data-lang]').forEach((b) => {
+        b.addEventListener('click', () => gate.classList.add('hidden'))
+      })
+
+      // Home header hamburger → dropdown toggle (with outside-click dismiss)
+      document.querySelectorAll('[data-toggle-menu]').forEach((b) => {
+        b.addEventListener('click', (e) => {
+          e.stopPropagation()
+          const pop = b.parentElement.querySelector('[data-menu-pop]')
+          if (pop) pop.classList.toggle('open')
+        })
+      })
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-menu-pop]')) return
+        document.querySelectorAll('[data-menu-pop].open').forEach((p) => p.classList.remove('open'))
+      })
+
+      // Dropdown language picks: just close the menu (mockup is single-language)
+      document.querySelectorAll('[data-lang-set]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const pop = b.closest('[data-menu-pop]')
+          if (pop) pop.classList.remove('open')
+        })
+      })
+
+      // Concierge strip on home → open Chat
+      document.querySelectorAll('#home .concierge').forEach((a) => {
+        a.addEventListener('click', (e) => { e.preventDefault(); showScreen('chat') })
+      })
+
+      // Section list rows → jump to matching screen (Parking/Wi-Fi etc. don't have a
+      // dedicated screen in this mockup, so only Check-in and Ask MiCasa navigate).
+      // Updated order: 1 Welcome, 2 Check-in, 3 Parking, 4 Wi-Fi, 5 House rules,
+      // 6 Things to do, 7 Where to eat, 8 Waste, 9 Emergencies, 10 Check-out, 11 Ask MiCasa.
+      document.querySelectorAll('#home .sections .row').forEach((row, idx) => {
+        row.addEventListener('click', () => {
+          if (idx === 1) showScreen('check')
+          else if (idx === 5) showScreen('explore')
+          else if (idx === 10) showScreen('chat')
         })
       })
     </script>

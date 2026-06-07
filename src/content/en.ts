@@ -231,6 +231,10 @@ export const en: GuideContent = {
       q: 'Is additional cleaning possible?',
       a: 'Of course — we ask for two days’ notice, and the cost is €30.',
     },
+    {
+      q: 'What if there is no hot water or the boiler isn’t working?',
+      a: 'For any issue with the hot water or the boiler, please message us on WhatsApp at +39 346 248 2556 right away so we can help as quickly as possible.',
+    },
   ],
   reviews: [
     'Beautiful and renovated apartment. Lovely terrace to relax and cook. We recommend it :)',

@@ -231,6 +231,10 @@ export const fr: GuideContent = {
       q: 'Un ménage supplémentaire est-il possible ?',
       a: 'Bien sûr — nous demandons deux jours de préavis, et le coût est de 30 €.',
     },
+    {
+      q: 'Que faire en cas d’absence d’eau chaude ou de panne de la chaudière ?',
+      a: 'Pour tout problème d’eau chaude ou de chaudière, écrivez-nous immédiatement sur WhatsApp au +39 346 248 2556 afin que nous puissions vous aider au plus vite.',
+    },
   ],
   reviews: [
     'Appartement magnifique et rénové. Belle terrasse pour se détendre et cuisiner. Nous le recommandons :)',

@@ -231,6 +231,10 @@ export const it: GuideContent = {
       q: 'È possibile avere una pulizia extra?',
       a: 'Certo — chiediamo due giorni di preavviso e il costo è di 30 €.',
     },
+    {
+      q: 'Cosa fare se manca l’acqua calda o la caldaia non funziona?',
+      a: 'Per qualsiasi problema con l’acqua calda o la caldaia, scrivici subito su WhatsApp al +39 346 248 2556 così possiamo aiutarti il prima possibile.',
+    },
   ],
   reviews: [
     'Appartamento bello e ristrutturato. Bella terrazza per rilassarsi e cucinare. Lo consigliamo :)',
