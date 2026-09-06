@@ -72,7 +72,10 @@ export const it: GuideContent = {
   },
   waste: {
     intro:
-      'Metti i rifiuti differenziati fuori, sulle scale dell’ingresso della via principale, il giorno del ritiro dopo le ore 19:00. Se alla partenza non hai potuto buttare l’immondizia perché non era il giorno giusto, puoi lasciarla in casa.',
+      'Metti i rifiuti differenziati fuori, sulle scale dell’ingresso della via principale, il giorno del ritiro dopo le ore 19:00. Se alla partenza non hai potuto buttare l’immondizia perché non era il giorno giusto, ti chiediamo gentilmente di portarla all’isola ecologica.',
+    bagsNote:
+      'Se compri altre buste per la raccolta, ti chiediamo gentilmente di non comprare buste nere: sono vietate.',
+    ecoCenter: { label: 'Isola ecologica', url: MAPS.ecoCenter },
     outro: 'Grazie per la collaborazione 🌍',
     dayCol: 'Giorno',
     typeCol: 'Tipo di rifiuto',

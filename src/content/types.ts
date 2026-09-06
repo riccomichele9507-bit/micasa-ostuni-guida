@@ -90,6 +90,10 @@ export interface GuideContent {
   }
   waste: {
     intro: string
+    /** Reminder about which bin bags are allowed. */
+    bagsNote: string
+    /** Municipal recycling centre, for rubbish that missed its collection day. */
+    ecoCenter: { label: string; url: string }
     outro: string
     dayCol: string
     typeCol: string

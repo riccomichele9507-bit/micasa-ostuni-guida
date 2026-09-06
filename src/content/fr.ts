@@ -72,7 +72,10 @@ export const fr: GuideContent = {
   },
   waste: {
     intro:
-      'Déposez vos déchets triés dehors, sur les marches de l’entrée de la rue principale, le jour de la collecte après 19h00. Si, au moment de partir, vous n’avez pas pu sortir les ordures parce que ce n’était pas le bon jour, vous pouvez simplement les laisser dans le logement.',
+      'Déposez vos déchets triés dehors, sur les marches de l’entrée de la rue principale, le jour de la collecte après 19h00. Si, au moment de partir, vous n’avez pas pu sortir les ordures parce que ce n’était pas le bon jour, nous vous demandons gentiment de les déposer à la déchetterie.',
+    bagsNote:
+      'Si vous achetez d’autres sacs pour le tri, merci de ne pas acheter de sacs noirs : ils sont interdits.',
+    ecoCenter: { label: 'Déchetterie', url: MAPS.ecoCenter },
     outro: 'Merci de votre coopération 🌍',
     dayCol: 'Jour',
     typeCol: 'Type de déchet',

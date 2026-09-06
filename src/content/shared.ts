@@ -41,6 +41,7 @@ export const LOCK_CODE = pick(
 /** Google Maps short links. */
 export const MAPS = {
   house: 'https://maps.app.goo.gl/6VDT1EeEa6MPnMoQA',
+  ecoCenter: 'https://maps.app.goo.gl/cnsCAr5m6Wfr7xeC6',
   parking5: 'https://maps.app.goo.gl/46hjQh8ty7L3v1e4A',
   parking10: 'https://maps.app.goo.gl/QMvmVcsEiTXwLDjUA',
   lidoMorelli: 'https://maps.app.goo.gl/aP7yESPYEEJ525sb6',

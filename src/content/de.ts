@@ -72,7 +72,10 @@ export const de: GuideContent = {
   },
   waste: {
     intro:
-      'Stellen Sie Ihren getrennten Müll draußen auf die Eingangsstufen der Hauptstraße, am Abholtag nach 19:00 Uhr. Wenn Sie den Müll bei der Abreise nicht entsorgen konnten, weil nicht der richtige Tag war, können Sie ihn einfach in der Wohnung lassen.',
+      'Stellen Sie Ihren getrennten Müll draußen auf die Eingangsstufen der Hauptstraße, am Abholtag nach 19:00 Uhr. Wenn Sie den Müll bei der Abreise nicht entsorgen konnten, weil nicht der richtige Tag war, bitten wir Sie freundlich, ihn zum Wertstoffhof zu bringen.',
+    bagsNote:
+      'Wenn Sie zusätzliche Müllbeutel kaufen, kaufen Sie bitte keine schwarzen Beutel: Sie sind verboten.',
+    ecoCenter: { label: 'Wertstoffhof', url: MAPS.ecoCenter },
     outro: 'Danke für Ihre Mithilfe 🌍',
     dayCol: 'Tag',
     typeCol: 'Abfallart',

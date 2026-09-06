@@ -72,7 +72,10 @@ export const en: GuideContent = {
   },
   waste: {
     intro:
-      'Put your sorted waste outside, on the entrance stairs of the main street, on the collection day after 7:00 PM. If you couldn’t take the rubbish out before leaving because it wasn’t the right day, you can simply leave it in the house.',
+      'Put your sorted waste outside, on the entrance stairs of the main street, on the collection day after 7:00 PM. If you couldn’t take the rubbish out before leaving because it wasn’t the right day, we kindly ask you to drop it off at the recycling centre.',
+    bagsNote:
+      'If you buy extra bags for the waste collection, please do not buy black bags: they are not allowed.',
+    ecoCenter: { label: 'Recycling centre', url: MAPS.ecoCenter },
     outro: 'Thank you for your cooperation 🌍',
     dayCol: 'Day',
     typeCol: 'Waste type',

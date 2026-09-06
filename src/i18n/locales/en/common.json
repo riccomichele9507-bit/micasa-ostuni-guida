@@ -78,6 +78,10 @@
   "home": {
     "heroTitle": "Welcome home",
     "heroSubtitle": "I'm here for your stay. Ask me anything, anytime.",
+    "wasteBanner": {
+      "title": "Please kindly sort your waste for recycling.",
+      "cta": "See the calendar and rules"
+    },
     "chatPromptHint": "wifi, check-in, beaches, where to dine…",
     "serveSubito": "You'll need this",
     "esploraGuida": "Explore the guide",

@@ -14,6 +14,7 @@ import { SuggestionPill } from '@/components/home/SuggestionPill'
 import { QuickCard } from '@/components/home/QuickCard'
 import { CategoryCard } from '@/components/home/CategoryCard'
 import { OfferBanner } from '@/components/home/OfferBanner'
+import { WasteBanner } from '@/components/home/WasteBanner'
 import { MAPS } from '@/content/shared'
 import { WHATSAPP_URL } from '@/lib/constants'
 import type { GuideContent } from '@/content/types'
@@ -59,6 +60,8 @@ export default function Home({ c, onAskAI, onNavigate }: HomeProps) {
         />
         <SuggestionPill label={t('actions.reachApartment')} href={MAPS.house} wiggle />
       </div>
+
+      <WasteBanner onClick={() => onNavigate('waste')} />
 
       {/* Serve subito */}
       <section>

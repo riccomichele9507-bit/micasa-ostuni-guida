@@ -78,6 +78,10 @@
   "home": {
     "heroTitle": "Benvenuto a casa",
     "heroSubtitle": "Sono qui per il tuo soggiorno. Chiedimi qualsiasi cosa, a qualsiasi ora.",
+    "wasteBanner": {
+      "title": "Si prega gentilmente di effettuare la raccolta differenziata.",
+      "cta": "Vedi calendario e regole"
+    },
     "chatPromptHint": "wifi, check-in, spiagge, dove cenare…",
     "serveSubito": "Serve subito",
     "esploraGuida": "Esplora la guida",

@@ -78,6 +78,10 @@
   "home": {
     "heroTitle": "Willkommen zu Hause",
     "heroSubtitle": "Ich bin für Ihren Aufenthalt da. Fragen Sie mich alles, jederzeit.",
+    "wasteBanner": {
+      "title": "Bitte trennen Sie Ihren Müll.",
+      "cta": "Kalender und Regeln ansehen"
+    },
     "chatPromptHint": "WLAN, Check-in, Strände, wo essen…",
     "serveSubito": "Sofort wichtig",
     "esploraGuida": "Den Guide erkunden",

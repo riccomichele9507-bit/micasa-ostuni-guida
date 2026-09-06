@@ -78,6 +78,10 @@
   "home": {
     "heroTitle": "Bienvenue à la maison",
     "heroSubtitle": "Je suis là pour votre séjour. Posez-moi n'importe quelle question, à toute heure.",
+    "wasteBanner": {
+      "title": "Merci de bien vouloir effectuer le tri des déchets.",
+      "cta": "Voir le calendrier et les règles"
+    },
     "chatPromptHint": "wifi, arrivée, plages, où dîner…",
     "serveSubito": "Vous aurez besoin de",
     "esploraGuida": "Explorer le guide",

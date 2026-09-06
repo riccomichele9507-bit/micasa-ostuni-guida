@@ -49,7 +49,7 @@ export function contentToMarkdown(c: GuideContent): string {
   )
 
   out.push(
-    `## Waste sorting\n${c.waste.intro}\n${c.waste.days
+    `## Waste sorting\n${c.waste.intro}\n${c.waste.bagsNote}\n${c.waste.ecoCenter.label} [Map: ${c.waste.ecoCenter.url}]\n${c.waste.days
       .map((d) => `${d.day}: ${d.type}`)
       .join('\n')}`,
   )
